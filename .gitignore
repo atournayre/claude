@@ -1,0 +1,44 @@
+# Fichiers sensibles
+.credentials.json
+*.key
+*.pem
+*.p12
+
+# Fichiers d'historique et de session (volumineux et temporaires)
+history.jsonl
+file-history/
+session-env/
+shell-snapshots/
+
+# Logs et debug (temporaires)
+debug/
+logs/
+*.log
+
+# Données temporaires et cache
+todos/
+statsig/
+local/
+task/
+ide/
+data/
+
+# Rapports (peuvent être regénérés)
+reports/
+
+# Documentation externe (peut être rechargée)
+docs/
+
+# Dossiers spécifiques aux projets locaux
+projects/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup

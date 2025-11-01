@@ -1,0 +1,10 @@
+{
+  "atournayre-claude-plugin-marketplace": {
+    "source": {
+      "source": "directory",
+      "path": "/home/atournayre/PhpstormProjects/claude-plugin"
+    },
+    "installLocation": "/home/atournayre/PhpstormProjects/claude-plugin",
+    "lastUpdated": "2025-11-01T14:01:02.197Z"
+  }
+}
