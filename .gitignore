@@ -4,6 +4,11 @@
 *.pem
 *.p12
 
+# Configuration personnelle
+commands/
+hooks/
+plugins/
+
 # Fichiers d'historique et de session (volumineux et temporaires)
 history.jsonl
 file-history/
