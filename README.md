@@ -8,68 +8,25 @@ Configuration personnalisée pour [Claude Code](https://claude.com/claude-code) 
 ~/.claude/
 ├── CLAUDE.md              # Préférences utilisateur et instructions globales
 ├── settings.json          # Configuration Claude Code
-├── commands/              # Slash commands personnalisées
-│   ├── git/              # Commandes Git (commit, branch, PR, conflits, status)
-│   ├── github/           # Intégration GitHub (fix issues)
-│   ├── symfony/          # Commandes Symfony (make, documentation)
-│   ├── docker/           # Gestion Docker
-│   ├── debug/            # Debugging (stack-trace, error-fix)
-│   ├── qa/               # Qualité (PHPStan)
-│   ├── doc/              # Documentation (ADR, update, RTFM)
-│   ├── analyse/          # Analyse d'impact PR
-│   ├── api-platform/     # Documentation API Platform
-│   ├── meilisearch/      # Documentation Meilisearch
-│   ├── claude/           # Documentation Claude Code
-│   ├── atournayre-framework/ # Documentation framework custom
-│   ├── cc/               # Utilitaires Claude Code
-│   ├── context/          # Chargement de contexte
-│   ├── sessions/         # Gestion de sessions de développement
-│   ├── think/            # Analyse approfondie
-│   └── alias/            # Alias de commandes
-├── hooks/                # Git hooks et événements
+├── commands/              # Slash commands personnalisées (non versionnées)
+├── hooks/                # Hooks personnalisés (non versionnés)
+├── plugins/              # Plugins installés (non versionnés)
 ├── status-line/          # Script de status line personnalisée
 └── mcp/                  # Serveurs MCP
 ```
 
-## Commandes principales
+**Note**: Les dossiers `commands/`, `hooks/` et `plugins/` contiennent votre configuration personnelle et ne sont pas versionnés dans git.
 
-### Git & GitHub
-- `/git:commit` - Commits avec format conventional + emojis
-- `/git:branch` - Création de branches structurées
-- `/git:pr` - Pull Requests optimisées avec workflow
-- `/git:conflit` - Résolution de conflits guidée
-- `/git:status` - État du dépôt
-- `/github:fix` - Corriger une issue GitHub
+## Commandes disponibles
 
-### Symfony & PHP
-- `/symfony:make` - Utilise les makers Symfony ou `/prepare`
-- `/symfony:doc:load` - Charger doc Symfony locale
-- `/symfony:doc:question` - Interroger la doc Symfony
-- `/qa:phpstan` - Résoudre erreurs PHPStan
+Les slash commands sont stockées dans le dossier `commands/` (non versionné).
 
-### Documentation
-- `/doc:adr` - Générer Architecture Decision Records
-- `/doc:update` - Créer/mettre à jour la documentation
-- `/doc:rtfm` - Lire documentation technique
-- `/api-platform:doc:load|question` - Doc API Platform
-- `/meilisearch:doc:load|question` - Doc Meilisearch
-- `/claude:doc:load|question` - Doc Claude Code
+Pour voir la liste complète des commandes disponibles :
+```bash
+ls -R ~/.claude/commands/
+```
 
-### Développement
-- `/docker` - Actions avec Docker
-- `/debug:stack-trace` - Analyser une stack trace
-- `/debug:error-fix` - Résoudre une erreur
-- `/analyse:impact` - Analyser impact d'une PR
-- `/code` - Coder selon un plan
-- `/question` - Questions sur le projet sans coder
-
-### Utilitaires
-- `/sessions:start|end|current|list|update` - Gestion de sessions
-- `/think:harder|ultra` - Analyse approfondie
-- `/context:default|elegant_object` - Charger contexte
-- `/cc:make:command` - Générer nouvelles slash commands
-- `/cc:challenge` - Évaluer une réponse
-- `/alias:add` - Créer alias de commande
+Ou utilisez l'autocomplétion en tapant `/` dans Claude Code.
 
 ## Préférences
 
@@ -109,12 +66,14 @@ git clone git@github.com:atournayre/claude.git ~/.claude
 ## Fichiers ignorés
 
 Le `.gitignore` exclut:
-- Credentials et clés
-- Historique et sessions (volumineux)
-- Logs et debug
-- Cache et données temporaires
-- Documentation externe (rechargeable)
-- Projets locaux
+- **Configuration personnelle** : `commands/`, `hooks/`, `plugins/`
+- **Credentials et clés** : `.credentials.json`, `*.key`, `*.pem`, `*.p12`
+- **Historique et sessions** : `history.jsonl`, `file-history/`, `session-env/`, `shell-snapshots/`
+- **Logs et debug** : `debug/`, `logs/`, `*.log`
+- **Cache et données temporaires** : `todos/`, `statsig/`, `local/`, `task/`, `ide/`, `data/`
+- **Rapports** : `reports/` (peuvent être regénérés)
+- **Documentation externe** : `docs/` (peut être rechargée)
+- **Projets locaux** : `projects/`
 
 ## Licence
 
