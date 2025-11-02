@@ -217,6 +217,7 @@ fi
 usage_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;189m'; fi; }  # lavender
 cost_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;222m'; fi; }   # light gold
 burn_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;220m'; fi; }   # bright gold
+daily_cost_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;229m'; fi; }  # pale yellow
 session_color() { 
   rem_pct=$(( 100 - session_pct ))
   if   (( rem_pct <= 10 )); then SCLR='38;5;210'  # light pink
@@ -228,6 +229,7 @@ session_color() {
 # ---- cost and usage extraction ----
 session_txt=""; session_pct=0; session_bar=""
 cost_usd=""; cost_per_hour=""; tpm=""; tot_tokens=""
+daily_cost_usd=""
 
 # Extract cost data from Claude Code input
 if [ "$HAS_JQ" -eq 1 ]; then
@@ -293,9 +295,33 @@ if command -v ccusage >/dev/null 2>&1 && [ "$HAS_JQ" -eq 1 ]; then
   fi
 fi
 
+# ---- calculate daily cost ----
+if command -v ccusage >/dev/null 2>&1; then
+  # Use ccusage for accurate daily cost from Anthropic API
+  if [ "$HAS_JQ" -eq 1 ]; then
+    blocks_output=""
+    if command -v timeout >/dev/null 2>&1; then
+      blocks_output=$(timeout 5s ccusage blocks --json 2>/dev/null)
+    elif command -v gtimeout >/dev/null 2>&1; then
+      blocks_output=$(gtimeout 5s ccusage blocks --json 2>/dev/null)
+    else
+      blocks_output=$(ccusage blocks --json 2>/dev/null)
+    fi
+
+    if [ -n "$blocks_output" ]; then
+      # Sum costUSD from all blocks that started today
+      today_date=$(date +%Y-%m-%d)
+      daily_cost_usd=$(echo "$blocks_output" | jq -r --arg today "$today_date" '[.blocks[] | select(.startTime | startswith($today)) | .costUSD // 0] | add // 0' 2>/dev/null)
+    fi
+  fi
+else
+  # ccusage not installed - show warning
+  daily_cost_usd="ERROR:ccusage_not_installed"
+fi
+
 # ---- log extracted data ----
 {
-  echo "[$TIMESTAMP] Extracted: dir=${current_dir:-}, model=${model_name:-}, version=${model_version:-}, git=${git_branch:-}, context=${context_pct:-}, cost=${cost_usd:-}, cost_ph=${cost_per_hour:-}, tokens=${tot_tokens:-}, tpm=${tpm:-}, session_pct=${session_pct:-}"
+  echo "[$TIMESTAMP] Extracted: dir=${current_dir:-}, model=${model_name:-}, version=${model_version:-}, git=${git_branch:-}, context=${context_pct:-}, cost=${cost_usd:-}, cost_ph=${cost_per_hour:-}, daily_cost=${daily_cost_usd:-}, tokens=${tot_tokens:-}, tpm=${tpm:-}, session_pct=${session_pct:-}"
   if [ "$HAS_JQ" -eq 0 ]; then
     echo "[$TIMESTAMP] Note: Context, tokens, and session info require jq for full functionality"
   fi
@@ -348,9 +374,27 @@ if [ -n "$cost_usd" ] && [[ "$cost_usd" =~ ^[0-9.]+$ ]]; then
     line3="💰  $(cost_color)\$$(printf '%.2f' "$cost_usd")$(rst)"
   fi
 fi
+if [ -n "$daily_cost_usd" ]; then
+  if [[ "$daily_cost_usd" =~ ^ERROR: ]]; then
+    # Display error message
+    error_msg="${daily_cost_usd#ERROR:}"
+    if [ -n "$line3" ]; then
+      line3="$line3  ⚠️  $(C 38;5;203)${error_msg}$(rst)"
+    else
+      line3="⚠️  $(C 38;5;203)${error_msg}$(rst)"
+    fi
+  elif [[ "$daily_cost_usd" =~ ^[0-9.]+$ ]]; then
+    daily_formatted=$(LC_NUMERIC=C printf '%.2f' "$daily_cost_usd")
+    if [ -n "$line3" ]; then
+      line3="$line3  📅  $(daily_cost_color)\$${daily_formatted}/day$(rst)"
+    else
+      line3="📅  $(daily_cost_color)\$${daily_formatted}/day$(rst)"
+    fi
+  fi
+fi
 if [ -n "$tot_tokens" ] && [[ "$tot_tokens" =~ ^[0-9]+$ ]]; then
   if [ -n "$tpm" ] && [[ "$tpm" =~ ^[0-9.]+$ ]]; then
-    tpm_formatted=$(printf '%.0f' "$tpm")
+    tpm_formatted=$(LC_NUMERIC=C printf '%.0f' "$tpm")
     if [ -n "$line3" ]; then
       line3="$line3  📊  $(usage_color)${tot_tokens} tok (${tpm_formatted} tpm)$(rst)"
     else
