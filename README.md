@@ -59,9 +59,30 @@ Status line personnalisée affichant:
 
 ## Installation
 
+---
+
+### ⚠️ AVERTISSEMENT IMPORTANT ⚠️
+
+**L'installation va ÉCRASER votre `~/.claude/settings.json` existant !**
+
+**SAUVEGARDEZ AVANT D'INSTALLER :**
+
+```bash
+# Sauvegarder votre configuration actuelle
+cp ~/.claude/settings.json ~/.claude/settings.json.backup
+```
+
+---
+
+### Procédure d'installation
+
 ```bash
 git clone git@github.com:atournayre/claude.git ~/.claude
 ```
+
+### Après installation
+
+Vérifiez et fusionnez manuellement vos paramètres personnels depuis `settings.json.backup` si nécessaire.
 
 ## Fichiers ignorés
 
