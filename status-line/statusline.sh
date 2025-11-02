@@ -154,7 +154,7 @@ fi
 # ---- session name ----
 session_name=""
 session_file="$HOME/.claude/sessions/.current-session"
-if [ -f "$session_file" ]; then
+if [ -f "$session_file" ] && [ -s "$session_file" ]; then
   session_name=$(cat "$session_file" 2>/dev/null | tr -d '\n' | sed 's/\.md$//')
 fi
 
