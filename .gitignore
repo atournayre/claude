@@ -10,14 +10,15 @@ hooks/
 plugins/marketplaces/
 plugins/repos/
 plugins/known_marketplaces.json
+plugins/installed_plugins.json
 !plugins/config.json
-!plugins/installed_plugins.json
 
 # Fichiers d'historique et de session (volumineux et temporaires)
 history.jsonl
 file-history/
 session-env/
 shell-snapshots/
+sessions/
 
 # Logs et debug (temporaires)
 debug/
