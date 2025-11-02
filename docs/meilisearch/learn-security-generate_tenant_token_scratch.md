@@ -1,0 +1,72 @@
+# Generate a tenant token without a library
+
+**Source:** https://www.meilisearch.com/docs/learn/security/generate_tenant_token_scratch.md
+**Extrait le:** 2025-10-08
+**Sujet:** Security - Generating Tenant Tokens
+
+---
+
+# Generate a tenant token without a library
+
+> This guide shows you the main steps when creating tenant tokens without using any libraries.
+
+Generating tenant tokens without a library is possible, but not recommended. This guide summarizes the necessary steps.
+
+The full process requires you to create a token header, prepare the data payload with at least one set of search rules, and then sign the token with an API key.
+
+## Prepare token header
+
+The token header must specify a `JWT` type and an encryption algorithm. Supported tenant token encryption algorithms are `HS256`, `HS384`, and `HS512`.
+
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+## Build token payload
+
+First, create a set of search rules:
+
+```json
+{
+  "INDEX_NAME": {
+    "filter": "ATTRIBUTE = VALUE"
+  }
+}
+```
+
+Next, find your default search API key. Query the [get an API key endpoint](/reference/api/keys#get-one-key) and inspect the `uid`  field to obtain your API key's UID:
+
+```sh
+curl \
+  -X GET 'MEILISEARCH_URL/keys/API_KEY' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+For maximum security, you should also set an expiry date for your tenant tokens. The following Node.js example configures the token to expire 20 minutes after its creation:
+
+```js
+parseInt(Date.now() / 1000) + 20 * 60
+```
+
+Lastly, assemble all parts of the payload in a single object:
+
+```json
+{
+  "exp": UNIX_TIMESTAMP,
+  "apiKeyUid": "API_KEY_UID",
+  "searchRules": {
+    "INDEX_NAME": {
+      "filter": "ATTRIBUTE = VALUE"
+    }
+  }
+}
+```
+
+Consult the [token payload reference](/learn/security/tenant_token_reference) for more information on the requirements for each payload field.
+
+## Encode header and payload
+
+You must then encode both the header and the payload into `base64`, concatenate them, and generate the token by signing it using your chosen encryption

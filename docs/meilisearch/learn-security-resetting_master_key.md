@@ -1,0 +1,29 @@
+# Resetting the master key
+
+**Source:** https://www.meilisearch.com/docs/learn/security/resetting_master_key.md
+**Extrait le:** 2025-10-08
+**Sujet:** Security - Resetting Master Key
+
+---
+
+# Resetting the master key
+
+> This guide shows you how to reset the master key in Meilisearch Cloud and self-hosted instances.
+
+This guide shows you how to manage the master key in Meilisearch Cloud and self-hosted instances. Resetting the master key may be necessary if an unauthorized party obtains access to your master key.
+
+## Resetting the master key in Meilisearch Cloud
+
+Meilisearch Cloud does not give users control over the master key. If you need to change your master key, contact support through the Cloud interface or on the official [Meilisearch Discord server](https://discord.meilisearch.com).
+
+<Warning>
+  Resetting the master key automatically invalidates all API keys. Meilisearch Cloud will generate new default API keys automatically.
+</Warning>
+
+## Resetting the master key in self-hosted instances
+
+To reset your master key in a self-hosted instance, relaunch your instance and pass a new value to `--master-key` or `MEILI_MASTER_KEY`.
+
+<Warning>
+  Resetting the master key automatically invalidates all API keys. Meilisearch Cloud will generate new default API keys automatically.
+</Warning>

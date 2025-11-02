@@ -1,0 +1,58 @@
+# Use AI-powered search with user-provided embeddings
+
+**Source:** https://www.meilisearch.com/docs/learn/ai_powered_search/search_with_user_provided_embeddings.md
+**Extrait le:** 2025-10-08
+**Sujet:** AI-Powered Search - User-provided embeddings
+
+---
+
+> This guide shows how to perform AI-powered searches with user-generated embeddings instead of relying on a third-party tool.
+
+This guide shows how to perform AI-powered searches with user-generated embeddings instead of relying on a third-party tool.
+
+## Requirements
+
+* A Meilisearch project
+
+## Configure a custom embedder
+
+Configure the `embedder` index setting, settings its source to `userProvided`:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "image2text": {
+        "source":  "userProvided",
+        "dimensions": 3
+      }
+    }
+  }'
+```
+
+## Add documents to Meilisearch
+
+Next, use [the `/documents` endpoint](/reference/api/documents?utm_campaign=vector-search\&utm_source=docs\&utm_medium=vector-search-guide) to upload vectorized documents. Place vector data in your documents' `_vectors` field:
+
+```sh
+curl -X POST -H 'content-type: application/json' \
+'localhost:7700/indexes/products/documents' \
+--data-binary '[
+    { "id": 0, "_vectors": {"image2text": [0, 0.8, -0.2]}, "text": "frying pan" },
+    { "id": 1, "_vectors": {"image2text": [1, -0.2, 0]}, "text": "baking dish" }
+]'
+```
+
+## Vector search with user-provided embeddings
+
+When using a custom embedder, you must vectorize both your documents and user queries.
+
+Once you have the query's vector, pass it to the `vector` search parameter to perform an AI-powered search:
+
+```sh
+curl -X POST -H 'content-type: application/json' \
+  'localhost:7700/indexes/products/search' \
+  --data-binary '{ "vector": [0, 1, 2] }'
+```

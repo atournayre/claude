@@ -1,0 +1,73 @@
+# Analytics events endpoint
+
+**Source:** https://www.meilisearch.com/docs/learn/analytics/events_endpoint.md
+**Extrait le:** 2025-10-08
+**Sujet:** Analytics - Events Endpoint
+
+---
+
+> This reference describes /events, the endpoint you should use to submit analytics events to Meilisearch Cloud. It also describes the accepted event objects and the data you must include in them.
+
+This reference describes `/events`, the endpoint you should use to submit analytics events to Meilisearch Cloud. It also describes the accepted event objects and the data you must include in them.
+
+## The `/events` endpoint
+
+The `/events` endpoint is only available for Meilisearch Cloud projects with analytics and monitoring activated.
+
+### Send an event
+
+```http
+POST https://edge.meilisearch.com/events
+```
+
+Send an analytics event to Meilisearch Cloud. Accepts [`click`](#the-click-event-object) and [`conversion`](#the-conversion-event-object) events.
+
+<Tip>
+  By default, Meilisearch associates analytics events with the most recent search of the user who triggered them. Include the same `X-MS-USER-ID` header in your search and event requests to manually [bind analytics events to a user](/learn/analytics/bind_events_user).
+</Tip>
+
+#### Example
+
+<CodeSamplesAnalyticsEventClick />
+
+##### Response: `201 Created`
+
+### The `click` event object
+
+The `click` event must deliver an object with the following fields:
+
+```json
+{
+  "eventType": "click",
+  "eventName": "Search Result Clicked",
+  "indexUid": "products",
+  "objectId": "0",
+  "position": 0
+}
+```
+
+* `eventType`: a string indicating this is a `click` event
+* `eventName`: a string describing the event
+* `indexUid`: a string indicating the clicked document's index
+* `objectId`: a string indicating the clicked document's primary key
+* `position`: an integer indicating the clicked document's position in the list of search results
+
+### The `conversion` event object
+
+The `conversion` event must deliver an object with the following fields:
+
+```json
+{
+  "eventType": "conversion",
+  "eventName": "Product Added To Cart",
+  "indexUid": "products",
+  "objectID": "0",
+  "position": 0
+}
+```
+
+* `eventType`: a string indicating this is a `conversion` event
+* `eventName`: a string describing the event
+* `indexUid`: a string indicating the converted document's index
+* `objectID`: a string indicating the converted document's primary key
+* `position`: an integer indicating the converted document's position in the list of search results
