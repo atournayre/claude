@@ -1,0 +1,66 @@
+# Symfony Docs
+
+## Variables
+- VERSION: 7.4
+
+> Resources to fetch and load into docs/symfony/VERSION/*.md at runtime
+
+- https://symfony.com/doc/VERSION/components/http_foundation.html
+- https://symfony.com/doc/VERSION/components/http_kernel.html
+- https://symfony.com/doc/VERSION/routing.html
+- https://symfony.com/doc/VERSION/components/event_dispatcher.html
+- https://symfony.com/doc/VERSION/service_container.html
+- https://symfony.com/doc/VERSION/controller.html
+- https://symfony.com/doc/VERSION/components/http_foundation.html#request-response
+- https://symfony.com/doc/VERSION/routing.html#route-parameters
+- https://symfony.com/doc/VERSION/doctrine.html
+- https://symfony.com/doc/VERSION/doctrine/migrations.html
+- https://symfony.com/doc/VERSION/bundles/DoctrineFixturesBundle/index.html
+- https://symfony.com/doc/VERSION/doctrine/query_builder.html
+- https://symfony.com/doc/VERSION/doctrine/repository.html
+- https://symfony.com/doc/VERSION/security.html
+- https://symfony.com/doc/VERSION/security/authentication.html
+- https://symfony.com/doc/VERSION/security/authorization.html
+- https://symfony.com/doc/VERSION/security/voters.html
+- https://symfony.com/doc/VERSION/security/firewall.html
+- https://symfony.com/doc/VERSION/security/user_providers.html
+- https://symfony.com/doc/VERSION/forms.html
+- https://symfony.com/doc/VERSION/form/types.html
+- https://symfony.com/doc/VERSION/validation.html
+- https://symfony.com/doc/VERSION/validation/constraints.html
+- https://symfony.com/doc/VERSION/validation/custom_constraint.html
+- https://symfony.com/doc/VERSION/templates.html
+- https://symfony.com/doc/VERSION/templating/twig_extension.html
+- https://symfony.com/doc/VERSION/templates.html#template-inheritance
+- https://symfony.com/doc/VERSION/form/form_view.html
+- https://symfony.com/doc/VERSION/messenger.html
+- https://symfony.com/doc/VERSION/messenger.html#creating-a-message-handler
+- https://symfony.com/doc/VERSION/messenger.html#transports
+- https://symfony.com/doc/VERSION/messenger.html#consuming-messages
+- https://symfony.com/doc/VERSION/mercure.html
+- https://api-platform.com/docs/core/
+- https://symfony.com/doc/VERSION/serializer.html
+- https://symfony.com/doc/VERSION/controller.html#json-helper
+- https://symfony.com/doc/VERSION/best_practices.html#web-services
+- https://symfony.com/doc/VERSION/console.html
+- https://symfony.com/doc/VERSION/console/input.html
+- https://symfony.com/doc/VERSION/console.html#command-lifecycle
+- https://symfony.com/doc/VERSION/console/helpers.html
+- https://symfony.com/doc/VERSION/cache.html
+- https://symfony.com/doc/VERSION/http_cache.html
+- https://symfony.com/doc/VERSION/cache.html#configuring-cache-adapters
+- https://symfony.com/doc/VERSION/performance.html
+- https://symfony.com/doc/VERSION/testing.html
+- https://symfony.com/doc/VERSION/testing.html#unit-tests
+- https://symfony.com/doc/VERSION/testing.html#functional-tests
+- https://symfony.com/doc/VERSION/testing/database.html
+- https://symfony.com/doc/VERSION/configuration.html
+- https://symfony.com/doc/VERSION/configuration.html#configuration-environments
+- https://symfony.com/doc/VERSION/service_container.html#service-configuration
+- https://symfony.com/doc/VERSION/bundles.html
+- https://symfony.com/doc/VERSION/event_dispatcher.html
+- https://symfony.com/doc/VERSION/workflow.html
+- https://symfony.com/doc/VERSION/translation.html
+- https://symfony.com/doc/VERSION/notifier.html
+- https://symfony.com/doc/VERSION/mailer.html
+- https://symfony.com/doc/VERSION/asset_mapper.html 
