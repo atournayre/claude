@@ -56,12 +56,12 @@
       "Bash(mv :*data:*)",
       "Bash(rm :*data:*)"
     ],
-    "defaultMode": "bypassPermissions",
-    "statusLine": {
-      "type": "command",
-      "command": "python3 ~/.claude/status-line/status_line_script.py --agent-model --git-info --session-duration --token-usage --output-style --session-name --daily-cost",
-      "padding": 0
-    }
+    "defaultMode": "bypassPermissions"
   },
-  "alwaysThinkingEnabled": false
+  "alwaysThinkingEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/status-line/statusline.sh",
+    "padding": 0
+  }
 }
