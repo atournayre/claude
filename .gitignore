@@ -36,9 +36,6 @@ data/
 # Rapports (peuvent être regénérés)
 reports/
 
-# Documentation externe (peut être rechargée)
-docs/
-
 # Dossiers spécifiques aux projets locaux
 projects/
 
@@ -52,3 +49,7 @@ Thumbs.db
 # Backup files
 *.bak
 *.backup
+
+
+# Temp
+old_commands
