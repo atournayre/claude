@@ -82,7 +82,12 @@ git clone git@github.com:atournayre/claude.git ~/.claude
 
 ### Après installation
 
-Vérifiez et fusionnez manuellement vos paramètres personnels depuis `settings.json.backup` si nécessaire.
+1. Vérifiez et fusionnez manuellement vos paramètres personnels depuis `settings.json.backup` si nécessaire.
+
+2. Installez les marketplaces :
+   ```bash
+   /plugin marketplace add atournayre/claude-marketplace
+   ```
 
 ## Fichiers ignorés
 

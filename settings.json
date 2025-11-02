@@ -58,10 +58,17 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "alwaysThinkingEnabled": false,
   "statusLine": {
     "type": "command",
     "command": "~/.claude/status-line/statusline.sh",
     "padding": 0
-  }
+  },
+  "enabledPlugins": {
+    "claude@atournayre-claude-plugin-marketplace": true,
+    "customize@atournayre-claude-plugin-marketplace": true,
+    "dev@atournayre-claude-plugin-marketplace": true,
+    "symfony@atournayre-claude-plugin-marketplace": true,
+    "output-styles@atournayre-claude-plugin-marketplace": true
+  },
+  "alwaysThinkingEnabled": false
 }
