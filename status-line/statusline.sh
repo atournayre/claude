@@ -40,10 +40,11 @@ RST() { if [ "$use_color" -eq 1 ]; then printf '\033[0m'; fi; }
 
 # ---- modern sleek colors ----
 dir_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;117m'; fi; }    # sky blue
-model_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;147m'; fi; }  # light purple  
+model_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;147m'; fi; }  # light purple
 version_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;180m'; fi; } # soft yellow
 cc_version_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;249m'; fi; } # light gray
 style_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;245m'; fi; } # gray
+session_name_color() { if [ "$use_color" -eq 1 ]; then printf '\033[38;5;141m'; fi; } # light magenta
 rst() { if [ "$use_color" -eq 1 ]; then printf '\033[0m'; fi; }
 
 # ---- time helpers ----
@@ -148,6 +149,13 @@ rst() { if [ "$use_color" -eq 1 ]; then printf '\033[0m'; fi; }
 git_branch=""
 if git rev-parse --git-dir >/dev/null 2>&1; then
   git_branch=$(git branch --show-current 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
+fi
+
+# ---- session name ----
+session_name=""
+session_file="$HOME/.claude/sessions/.current-session"
+if [ -f "$session_file" ]; then
+  session_name=$(cat "$session_file" 2>/dev/null | tr -d '\n' | sed 's/\.md$//')
 fi
 
 # ---- context window calculation ----
@@ -294,7 +302,7 @@ fi
 } >> "$LOG_FILE" 2>/dev/null
 
 # ---- render statusline ----
-# Line 1: Core info (directory, git, model, claude code version, output style)
+# Line 1: Core info (directory, git, model, claude code version, output style, session)
 printf '📁  %s%s%s' "$(dir_color)" "$current_dir" "$(rst)"
 if [ -n "$git_branch" ]; then
   printf '  🌿  %s%s%s' "$(git_color)" "$git_branch" "$(rst)"
@@ -308,6 +316,9 @@ if [ -n "$cc_version" ] && [ "$cc_version" != "null" ]; then
 fi
 if [ -n "$output_style" ] && [ "$output_style" != "null" ]; then
   printf '  🎨  %s%s%s' "$(style_color)" "$output_style" "$(rst)"
+fi
+if [ -n "$session_name" ]; then
+  printf '  📝  %s%s%s' "$(session_name_color)" "$session_name" "$(rst)"
 fi
 
 # Line 2: Context and session time
