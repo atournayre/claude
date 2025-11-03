@@ -68,7 +68,11 @@
     "customize@atournayre-claude-plugin-marketplace": true,
     "dev@atournayre-claude-plugin-marketplace": true,
     "symfony@atournayre-claude-plugin-marketplace": true,
-    "output-styles@atournayre-claude-plugin-marketplace": true
+    "output-styles@atournayre-claude-plugin-marketplace": true,
+    "git@atournayre-claude-plugin-marketplace": true,
+    "github@atournayre-claude-plugin-marketplace": true,
+    "qa@atournayre-claude-plugin-marketplace": true,
+    "doc@atournayre-claude-plugin-marketplace": true
   },
   "alwaysThinkingEnabled": false
 }
