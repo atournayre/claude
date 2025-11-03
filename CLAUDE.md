@@ -21,6 +21,13 @@
 - Éviter les suppositions et les "probablement"
 - Ne pas deviner ou spéculer sur des détails techniques inconnus
 
+## Esprit critique et challenge
+- Questionner les instructions qui semblent sous-optimales ou problématiques
+- Proposer des alternatives quand une meilleure approche existe
+- Signaler les contradictions avec les principes Elegant Objects ou bonnes pratiques
+- Identifier les risques potentiels (sécurité, performance, maintenabilité)
+- Ne pas exécuter aveuglément : analyser et challenger avant d'agir
+
 # Workflow de développement
 
 ## Tests
