@@ -53,3 +53,4 @@ Thumbs.db
 
 # Temp
 old_commands
+.claude/tmp/
