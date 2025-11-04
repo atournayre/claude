@@ -59,30 +59,30 @@ Status line personnalisée affichant:
 
 ## Installation
 
----
-
-### ⚠️ AVERTISSEMENT IMPORTANT ⚠️
-
-**L'installation va ÉCRASER votre `~/.claude/settings.json` existant !**
-
-**SAUVEGARDEZ AVANT D'INSTALLER :**
+### Installation automatique (recommandé)
 
 ```bash
-# Sauvegarder votre configuration actuelle
-cp ~/.claude/settings.json ~/.claude/settings.json.backup
+curl -sSL https://raw.githubusercontent.com/atournayre/claude/main/install.sh | bash
 ```
 
----
+Le script d'installation :
+- Sauvegarde automatiquement votre configuration existante
+- Clone le repository
+- Restaure vos fichiers personnels (`commands/`, `hooks/`, `plugins/`)
+- Préserve votre `settings.json` dans `settings.json.backup`
 
-### Procédure d'installation
+### Installation manuelle
 
 ```bash
-git clone git@github.com:atournayre/claude.git ~/.claude
+# 1. Télécharger et exécuter le script
+wget https://raw.githubusercontent.com/atournayre/claude/main/install.sh
+chmod +x install.sh
+./install.sh
 ```
 
 ### Après installation
 
-1. Vérifiez et fusionnez manuellement vos paramètres personnels depuis `settings.json.backup` si nécessaire.
+1. Vérifiez et fusionnez manuellement vos paramètres personnels depuis `settings.json.backup` si nécessaire
 
 2. Installez les marketplaces :
    ```bash
