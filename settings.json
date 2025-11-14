@@ -98,5 +98,6 @@
     "qa@atournayre-claude-plugin-marketplace": true,
     "doc@atournayre-claude-plugin-marketplace": true
   },
-  "alwaysThinkingEnabled": false
+  "includeCoAuthoredBy": false,
+  "alwaysThinkingEnabled": true
 }
