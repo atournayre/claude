@@ -6,18 +6,21 @@ Configuration personnalisée pour [Claude Code](https://claude.com/claude-code) 
 
 ```
 ~/.claude/
-├── CLAUDE.md              # Préférences utilisateur et instructions globales
-├── settings.json          # Configuration Claude Code
-├── commands/              # Slash commands personnalisées (non versionnées)
-├── hooks/                 # Hooks personnalisés (non versionnés)
-├── plugins/               # Plugins installés (non versionnés)
-├── scripts/               # Scripts utilitaires
+├── CLAUDE.md                  # Préférences utilisateur et instructions globales
+├── settings.json              # Configuration Claude Code
+├── commands/                  # Slash commands personnalisées (non versionnées)
+├── hooks/                     # Hooks personnalisés (non versionnés)
+├── plugins/                   # Plugins installés (non versionnés)
+├── scripts/                   # Scripts utilitaires
 │   ├── kyutai-tts-installer/  # Installer Kyutai TTS
 │   ├── notification-kyutai.sh # Hook notifications vocales
 │   └── ...
-├── status-line/           # Script de status line personnalisée
-├── docs/                  # Documentation (non versionnée)
-└── mcp/                   # Serveurs MCP
+├── status-line/               # Script de status line personnalisée
+├── docs/                      # Documentation (non versionnée)
+└── mcp/                       # Serveurs MCP
+    ├── sentry.json            # Monitoring Sentry
+    ├── chrome-dev-tools.json  # Chrome DevTools
+    └── context7.json          # Context7 (doc code)
 ```
 
 **Note**: Les dossiers `commands/`, `hooks/` et `plugins/` contiennent votre configuration personnelle et ne sont pas versionnés dans git.
@@ -75,6 +78,15 @@ cd ~/.claude/scripts/kyutai-tts-installer
 ```
 
 Prérequis: Docker + GPU NVIDIA (8GB+ VRAM)
+
+## Serveurs MCP
+
+**Documentation complète**: [docs/mcp-servers.md](docs/mcp-servers.md)
+
+Serveurs installés:
+- **Sentry**: Monitoring erreurs et performance
+- **Chrome DevTools**: Debug navigateur en temps réel
+- **Context7**: Documentation code pour LLMs (repos GitHub/GitLab)
 
 ## Installation
 
