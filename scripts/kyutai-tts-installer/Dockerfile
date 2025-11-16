@@ -66,9 +66,33 @@ COPY test_tts.py /app/
 # Make the scripts executable
 RUN chmod +x /app/scripts/tts_runner.py /app/test_tts.py
 
-# Copy the API server and dependency checker
+# Copy the API server with French voices and dependency checker
 COPY api_server.py /app/
 COPY dependency_check.py /app/
+
+# Download French CML voices for better French accent
+RUN python -c "
+from huggingface_hub import hf_hub_download
+import os
+os.environ['HF_HOME'] = '/app/cache'
+
+french_voices = [
+    'cml-tts/fr/12977_10625_000037-0001.wav.1e68beda@240.safetensors',
+    'cml-tts/fr/1406_1028_000009-0003.wav.1e68beda@240.safetensors',
+    'cml-tts/fr/10087_11650_000028-0002.wav.1e68beda@240.safetensors',
+    'cml-tts/fr/10177_10625_000134-0003.wav.1e68beda@240.safetensors'
+]
+
+for voice in french_voices:
+    try:
+        hf_hub_download(
+            repo_id='kyutai/tts-voices',
+            filename=voice,
+            repo_type='model'
+        )
+    except Exception as e:
+        print(f'Warning: Could not download {voice}: {e}')
+"
 
 # Create example text file
 RUN echo "Hello, this is Kyutai Text-to-Speech running in Docker with GPU support!" > /app/input/example.txt

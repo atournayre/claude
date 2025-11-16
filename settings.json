@@ -88,7 +88,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/notification-kyutai.sh"
+            "command": "~/.claude/scripts/notification-kyutai.py"
           }
         ]
       },
@@ -97,7 +97,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/notification-kyutai.sh"
+            "command": "~/.claude/scripts/notification-kyutai.py"
           }
         ]
       },
@@ -106,7 +106,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/notification-kyutai.sh"
+            "command": "~/.claude/scripts/notification-kyutai.py"
           }
         ]
       },
@@ -115,7 +115,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/notification-kyutai.sh"
+            "command": "~/.claude/scripts/notification-kyutai.py"
           }
         ]
       }
@@ -137,5 +137,9 @@
     "qa@atournayre-claude-plugin-marketplace": true,
     "doc@atournayre-claude-plugin-marketplace": true
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "env": {
+    "KYUTAI_VOICE": "onyx",
+    "ENGINEER_NAME": "Aurélien"
+  }
 }

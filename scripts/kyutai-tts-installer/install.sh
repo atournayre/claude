@@ -220,13 +220,18 @@ else
     exit 1
 fi
 
-# Copier wrapper notification dans .claude/scripts
+# Vérifier que le wrapper notification existe
 CLAUDE_SCRIPT_DIR="$HOME/.claude/scripts"
-if [ -d "$CLAUDE_SCRIPT_DIR" ]; then
-    cp "$SCRIPT_DIR/notification-kyutai.sh" "$CLAUDE_SCRIPT_DIR/"
-    chmod +x "$CLAUDE_SCRIPT_DIR/notification-kyutai.sh"
-    log_info "Wrapper notification copié: $CLAUDE_SCRIPT_DIR/notification-kyutai.sh"
+NOTIFICATION_SCRIPT="$CLAUDE_SCRIPT_DIR/notification-kyutai.py"
+
+if [ ! -f "$NOTIFICATION_SCRIPT" ]; then
+    log_error "Script notification introuvable: $NOTIFICATION_SCRIPT"
+    log_info "Le script doit exister dans $CLAUDE_SCRIPT_DIR/"
+    exit 1
 fi
+
+log_info "Script notification trouvé: $NOTIFICATION_SCRIPT"
+chmod +x "$NOTIFICATION_SCRIPT"
 
 echo ""
 echo "=========================================="
@@ -243,27 +248,27 @@ echo ""
 echo "  \"Notification\": ["
 echo "    {"
 echo "      \"matcher\": \"permission_prompt\","
-echo "      \"hooks\": [{\"type\": \"command\", \"command\": \"~/.claude/scripts/notification-kyutai.sh\"}]"
+echo "      \"hooks\": [{\"type\": \"command\", \"command\": \"~/.claude/scripts/notification-kyutai.py\"}]"
 echo "    },"
 echo "    {"
 echo "      \"matcher\": \"idle_prompt\","
-echo "      \"hooks\": [{\"type\": \"command\", \"command\": \"~/.claude/scripts/notification-kyutai.sh\"}]"
+echo "      \"hooks\": [{\"type\": \"command\", \"command\": \"~/.claude/scripts/notification-kyutai.py\"}]"
 echo "    },"
 echo "    {"
 echo "      \"matcher\": \"auth_success\","
-echo "      \"hooks\": [{\"type\": \"command\", \"command\": \"~/.claude/scripts/notification-kyutai.sh\"}]"
+echo "      \"hooks\": [{\"type\": \"command\", \"command\": \"~/.claude/scripts/notification-kyutai.py\"}]"
 echo "    },"
 echo "    {"
 echo "      \"matcher\": \"elicitation_dialog\","
-echo "      \"hooks\": [{\"type\": \"command\", \"command\": \"~/.claude/scripts/notification-kyutai.sh\"}]"
+echo "      \"hooks\": [{\"type\": \"command\", \"command\": \"~/.claude/scripts/notification-kyutai.py\"}]"
 echo "    }"
 echo "  ]"
 echo ""
 log_info "Test API:"
 echo "curl -X POST http://localhost:$API_PORT/v1/audio/speech \\"
 echo "  -H 'Content-Type: application/json' \\"
-echo "  -d '{\"model\":\"tts-1\",\"input\":\"Bonjour\",\"voice\":\"alloy\"}' \\"
-echo "  --output test.mp3"
+echo "  -d '{\"model\":\"tts-1\",\"input\":\"Bonjour\",\"voice\":\"alloy\",\"response_format\":\"wav\"}' \\"
+echo "  --output test.wav && paplay test.wav"
 echo ""
 log_info "Commandes systemd:"
 echo "  systemctl --user start kyutai-tts    # Démarrer"

@@ -63,12 +63,12 @@ Le script effectue:
 ~/.claude/scripts/
 ├── kyutai-tts-installer/          # Installer (réutilisable)
 │   ├── install.sh
-│   ├── notification-kyutai.sh
+│   ├── notification-kyutai.py
 │   ├── Dockerfile
 │   ├── tts_runner.py
 │   ├── test_tts.py
 │   └── README.md
-└── notification-kyutai.sh         # Hook Claude Code
+└── notification-kyutai.py         # Hook Claude Code
 ```
 
 ## Configuration Claude Code
@@ -81,19 +81,19 @@ Le script d'installation configure automatiquement `~/.claude/settings.json`:
     "Notification": [
       {
         "matcher": "permission_prompt",
-        "hooks": [{"type": "command", "command": "~/.claude/scripts/notification-kyutai.sh"}]
+        "hooks": [{"type": "command", "command": "~/.claude/scripts/notification-kyutai.py"}]
       },
       {
         "matcher": "idle_prompt",
-        "hooks": [{"type": "command", "command": "~/.claude/scripts/notification-kyutai.sh"}]
+        "hooks": [{"type": "command", "command": "~/.claude/scripts/notification-kyutai.py"}]
       },
       {
         "matcher": "auth_success",
-        "hooks": [{"type": "command", "command": "~/.claude/scripts/notification-kyutai.sh"}]
+        "hooks": [{"type": "command", "command": "~/.claude/scripts/notification-kyutai.py"}]
       },
       {
         "matcher": "elicitation_dialog",
-        "hooks": [{"type": "command", "command": "~/.claude/scripts/notification-kyutai.sh"}]
+        "hooks": [{"type": "command", "command": "~/.claude/scripts/notification-kyutai.py"}]
       }
     ]
   }
@@ -109,18 +109,162 @@ Le script d'installation configure automatiquement `~/.claude/settings.json`:
 | `auth_success`       | "Authentification réussie"      |
 | `elicitation_dialog` | "Information requise"           |
 
-### Personnalisation
+### Voix disponibles
 
-Modifier `~/.claude/scripts/notification-kyutai.sh`:
+Le système utilise des voix françaises du dataset CML-TTS pour un accent français européen.
+
+| Nom    | Source CML                                | Caractéristiques          |
+|--------|-------------------------------------------|---------------------------|
+| alloy  | `cml-tts/fr/12977_10625_000037-0001.wav` | Voix neutre, claire       |
+| echo   | `cml-tts/fr/1406_1028_000009-0003.wav`   | Voix douce, posée         |
+| fable  | `cml-tts/fr/10087_11650_000028-0002.wav` | Voix narrative            |
+| **onyx** | `cml-tts/fr/10177_10625_000134-0003.wav` | **Voix française recommandée** |
+| nova   | `cml-tts/fr/12977_10625_000037-0001.wav` | Voix énergique            |
+| shimmer | `cml-tts/fr/1406_1028_000009-0003.wav`  | Voix chaleureuse          |
+
+**Voix par défaut**: `onyx` (accent français européen)
+
+#### Changer la voix
+
+**Méthode 1: Configuration Claude Code (recommandée)**
+
+Ajouter dans `~/.claude/settings.json`:
+
+```json
+{
+  "env": {
+    "KYUTAI_VOICE": "onyx",
+    "ENGINEER_NAME": "Aurélien"
+  }
+}
+```
+
+Redémarrer Claude Code pour appliquer les changements.
+
+**Méthode 2: Variable d'environnement shell**
+
+Ajouter dans `~/.bashrc` ou `~/.zshrc`:
 
 ```bash
-case "$notification_type" in
-  permission_prompt)
-    text="Votre message personnalisé"
-    ;;
-  ...
-esac
+export KYUTAI_VOICE="onyx"  # ou alloy, echo, fable, nova, shimmer
+export ENGINEER_NAME="Aurélien"
 ```
+
+Puis recharger:
+```bash
+source ~/.bashrc
+```
+
+**Méthode 3: Modifier le script directement**
+
+Éditer `~/.claude/scripts/notification-kyutai.py`:
+
+```python
+DEFAULT_VOICE = os.getenv("KYUTAI_VOICE", "onyx")  # Changer "onyx" ici
+```
+
+#### Tester les voix
+
+```bash
+# Tester toutes les voix
+for voice in alloy echo fable onyx nova shimmer; do
+  echo "Test: $voice"
+  curl -X POST http://localhost:9876/v1/audio/speech \
+    -H "Content-Type: application/json" \
+    -d "{\"model\":\"tts-1\",\"input\":\"Bonjour, je suis la voix $voice\",\"voice\":\"$voice\",\"response_format\":\"wav\"}" \
+    --output "/tmp/test-$voice.wav"
+  paplay "/tmp/test-$voice.wav"
+  sleep 2
+done
+```
+
+#### Ajouter de nouvelles voix françaises
+
+Le dataset CML-TTS contient 382 voix françaises. Pour en ajouter :
+
+1. Lister les voix disponibles:
+```bash
+docker exec kyutai-tts-gpu python3 -c "
+from huggingface_hub import list_repo_files
+files = list_repo_files('kyutai/tts-voices', repo_type='model')
+french_voices = [f for f in files if 'cml-tts/fr/' in f and f.endswith('.safetensors')]
+for v in french_voices[:20]:
+    print(v)
+"
+```
+
+2. Télécharger une voix:
+```bash
+docker exec kyutai-tts-gpu python3 -c "
+from huggingface_hub import hf_hub_download
+import os
+os.environ['HF_HOME'] = '/app/cache'
+hf_hub_download(
+    repo_id='kyutai/tts-voices',
+    filename='cml-tts/fr/VOTRE_VOIX.wav.1e68beda@240.safetensors'
+)
+"
+```
+
+3. Modifier le mapping dans `~/.local/share/kyutai-tts/api_server.py`:
+```python
+voice_mapping = {
+    "alloy": "cml-tts/fr/VOTRE_NOUVELLE_VOIX.wav",
+    # ...
+}
+```
+
+4. Redémarrer le service:
+```bash
+systemctl --user restart kyutai-tts
+```
+
+### Personnalisation
+
+**Option 1: Messages par défaut**
+
+Modifier `~/.claude/scripts/notification-kyutai.py`:
+
+```python
+DEFAULT_MESSAGES = {
+    "permission_prompt": "Votre message personnalisé",
+    "idle_prompt": "En attente",
+    ...
+}
+```
+
+**Option 2: Message custom dans hook**
+
+Le script lit le champ `message` du JSON si présent:
+
+```json
+{
+  "notification_type": "permission_prompt",
+  "message": "Attention requise immédiatement"
+}
+```
+
+**Option 3: Variables d'environnement**
+
+**Via Claude Code settings.json** (recommandé):
+```json
+{
+  "env": {
+    "KYUTAI_VOICE": "onyx",
+    "ENGINEER_NAME": "Aurélien"
+  }
+}
+```
+
+**Via shell** (`~/.bashrc`):
+```bash
+export KYUTAI_VOICE="onyx"
+export ENGINEER_NAME="Aurélien"
+```
+
+Le script utilise ces variables pour:
+- `KYUTAI_VOICE`: Choix de la voix (onyx, alloy, echo, fable, nova, shimmer)
+- `ENGINEER_NAME`: Personnalisation messages (30% du temps) - "Aurélien, demande de permission"
 
 ## Gestion du service
 
@@ -176,22 +320,33 @@ docker compose up -d
 # Health check
 curl http://localhost:9876/health
 
-# Générer audio
+# Générer audio WAV
 curl -X POST http://localhost:9876/v1/audio/speech \
   -H "Content-Type: application/json" \
-  -d '{"model":"tts-1","input":"Bonjour monde","voice":"alloy"}' \
-  --output test.mp3
+  -d '{"model":"tts-1","input":"Bonjour monde","voice":"alloy","response_format":"wav"}' \
+  --output test.wav
 
-# Écouter résultat (avec ffmpeg + paplay)
-ffmpeg -i test.mp3 -f wav - | paplay
+# Écouter résultat (avec paplay)
+paplay test.wav
 ```
 
 ### Test wrapper notification
 
 ```bash
+# Test simple
 echo '{"notification_type":"permission_prompt"}' | \
-  ~/.claude/scripts/notification-kyutai.sh
+  ~/.claude/scripts/notification-kyutai.py
+
+# Test avec message custom
+echo '{"notification_type":"idle_prompt","message":"Action requise"}' | \
+  ~/.claude/scripts/notification-kyutai.py
+
+# Test avec ENGINEER_NAME
+ENGINEER_NAME="Aurélien" echo '{"notification_type":"auth_success"}' | \
+  ~/.claude/scripts/notification-kyutai.py
 ```
+
+Les notifications sont loguées dans `~/.claude/logs/kyutai-notifications.jsonl`.
 
 ### Test via Python (OpenAI SDK)
 
@@ -233,10 +388,10 @@ curl -X POST http://localhost:9876/v1/audio/speech \
     "model": "tts-1",
     "input": "Authentification réussie",
     "voice": "alloy",
-    "response_format": "mp3",
+    "response_format": "wav",
     "speed": 1.0
   }' \
-  --output audio.mp3
+  --output audio.wav
 ```
 
 ### Endpoint: GET /v1/models
@@ -338,21 +493,18 @@ docker compose logs -f
 ### Audio ne joue pas
 
 ```bash
-# Vérifier ffmpeg installé
-command -v ffmpeg || sudo apt-get install -y ffmpeg
-
-# Vérifier paplay
+# Vérifier paplay installé
 command -v paplay || sudo apt-get install -y pulseaudio-utils
 
 # Tester sortie audio
 paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 
-# Test conversion MP3
+# Test génération WAV
 curl -X POST http://localhost:9876/v1/audio/speech \
   -H "Content-Type: application/json" \
-  -d '{"model":"tts-1","input":"Test"}' \
-  --output /tmp/test.mp3
-ffmpeg -i /tmp/test.mp3 -f wav - | paplay
+  -d '{"model":"tts-1","input":"Test","response_format":"wav"}' \
+  --output /tmp/test.wav
+paplay /tmp/test.wav
 ```
 
 ### Permissions cache Docker
@@ -405,10 +557,11 @@ docker rmi kyutai-tts:latest
 
 # Supprimer fichiers
 sudo rm -rf ~/.local/share/kyutai-tts
-rm ~/.claude/scripts/notification-kyutai.sh
+rm ~/.claude/scripts/notification-kyutai.py
+rm ~/.claude/logs/kyutai-notifications.jsonl
 
 # Restaurer ancien hook (optionnel)
-# Modifier ~/.claude/settings.json pour utiliser notification-sound.sh
+# Modifier ~/.claude/settings.json
 ```
 
 ## Licence
