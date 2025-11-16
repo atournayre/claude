@@ -9,10 +9,15 @@ Configuration personnalisée pour [Claude Code](https://claude.com/claude-code) 
 ├── CLAUDE.md              # Préférences utilisateur et instructions globales
 ├── settings.json          # Configuration Claude Code
 ├── commands/              # Slash commands personnalisées (non versionnées)
-├── hooks/                # Hooks personnalisés (non versionnés)
-├── plugins/              # Plugins installés (non versionnés)
-├── status-line/          # Script de status line personnalisée
-└── mcp/                  # Serveurs MCP
+├── hooks/                 # Hooks personnalisés (non versionnés)
+├── plugins/               # Plugins installés (non versionnés)
+├── scripts/               # Scripts utilitaires
+│   ├── kyutai-tts-installer/  # Installer Kyutai TTS
+│   ├── notification-kyutai.sh # Hook notifications vocales
+│   └── ...
+├── status-line/           # Script de status line personnalisée
+├── docs/                  # Documentation (non versionnée)
+└── mcp/                   # Serveurs MCP
 ```
 
 **Note**: Les dossiers `commands/`, `hooks/` et `plugins/` contiennent votre configuration personnelle et ne sont pas versionnés dans git.
@@ -56,6 +61,20 @@ Status line personnalisée affichant:
 - Utilisation tokens
 - Nom de session
 - Coût journalier
+
+## Notifications Vocales
+
+Notifications vocales avec **Kyutai TTS** pour les événements Claude Code (permissions, idle, auth success, etc.).
+
+**Documentation complète**: [docs/kyutai-tts.md](docs/kyutai-tts.md)
+
+**Installation rapide**:
+```bash
+cd ~/.claude/scripts/kyutai-tts-installer
+./install.sh
+```
+
+Prérequis: Docker + GPU NVIDIA (8GB+ VRAM)
 
 ## Installation
 
