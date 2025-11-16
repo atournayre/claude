@@ -129,7 +129,7 @@ claude --mcp-config ~/.claude/mcp/chrome-dev-tools.json --strict-mcp-config
 
 **Lancer uniquement Context7**:
 ```bash
-claude --mcp-config ~/.claude/mcp/context7.json --strict-mcp-config
+claude --mcp-config ~/.claude/mcp/context7.json --strict-mcp-config --append-system-prompt "use context7"
 ```
 
 </details>
