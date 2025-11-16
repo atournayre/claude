@@ -1,4 +1,5 @@
 {
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(./vendor/bin/phpstan:*)",
@@ -98,6 +99,5 @@
     "qa@atournayre-claude-plugin-marketplace": true,
     "doc@atournayre-claude-plugin-marketplace": true
   },
-  "includeCoAuthoredBy": false,
   "alwaysThinkingEnabled": true
 }
