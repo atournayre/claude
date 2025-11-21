@@ -1,4 +1,9 @@
 {
+  "env": {
+    "CLAUDE_NOTIFY_ERRORS": "true",
+    "KYUTAI_VOICE": "onyx",
+    "ENGINEER_NAME": "Aurélien"
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
@@ -141,9 +146,5 @@
     "qa@atournayre-claude-plugin-marketplace": true,
     "doc@atournayre-claude-plugin-marketplace": true
   },
-  "alwaysThinkingEnabled": true,
-  "env": {
-    "KYUTAI_VOICE": "onyx",
-    "ENGINEER_NAME": "Aurélien"
-  }
+  "alwaysThinkingEnabled": false
 }
