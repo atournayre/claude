@@ -15,6 +15,8 @@ LOG_DIR = Path.home() / ".claude" / "logs"
 # Voix par défaut (peut être surchargée par KYUTAI_VOICE)
 # Voix disponibles: alloy, echo, fable, onyx (recommandée), nova, shimmer
 DEFAULT_VOICE = os.getenv("KYUTAI_VOICE", "onyx")
+# Langue par défaut (fr ou en)
+DEFAULT_LANGUAGE = os.getenv("KYUTAI_LANGUAGE", "fr")
 
 # Messages par défaut par type
 DEFAULT_MESSAGES = {
@@ -52,7 +54,8 @@ def generate_speech(text):
                 "model": "tts-1",
                 "input": text,
                 "voice": DEFAULT_VOICE,
-                "response_format": "wav"
+                "response_format": "wav",
+                "language": DEFAULT_LANGUAGE
             },
             timeout=10
         )

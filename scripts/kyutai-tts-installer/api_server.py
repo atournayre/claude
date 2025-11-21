@@ -36,6 +36,7 @@ class SpeechRequest(BaseModel):
     voice: Literal["alloy", "echo", "fable", "onyx", "nova", "shimmer"] = Field("alloy", description="Voice to use")
     response_format: Literal["mp3", "opus", "aac", "flac", "wav", "pcm"] = Field("mp3", description="Audio format")
     speed: Optional[float] = Field(1.0, ge=0.25, le=4.0, description="Speed of generated audio")
+    language: Optional[Literal["fr", "en"]] = Field("fr", description="Language for voice selection (fr=French, en=English)")
 
 app = FastAPI(
     title="OpenAI-Compatible TTS API (Cached)",
@@ -95,29 +96,31 @@ def load_tts_model():
         logger.error(f"❌ Failed to load TTS model: {e}")
         raise
 
-def generate_audio_fast(text: str, voice: str = "alloy", speed: float = 1.0) -> bytes:
+def generate_audio_fast(text: str, voice: str = "alloy", speed: float = 1.0, language: str = "fr") -> bytes:
     """Generate audio using cached TTS model"""
     global tts_model, device, sample_rate
-    
     if tts_model is None:
         raise HTTPException(status_code=500, detail="TTS model not loaded")
-    
     try:
-        logger.info(f"🎵 Generating audio for: '{text[:50]}{'...' if len(text) > 50 else ''}'")
-        
-        # Prepare the script (text input)
+        logger.info(f"🎵 Generating audio for: '{text[:50]}{'...' if len(text) > 50 else ''}' (lang={language})")
         entries = tts_model.prepare_script([text], padding_between=1)
-        
-        # Voice mapping for OpenAI compatibility
-        voice_mapping = {
-            "alloy": "cml-tts/fr/12977_10625_000037-0001.wav",
-            "echo": "cml-tts/fr/1406_1028_000009-0003.wav",
-            "fable": "cml-tts/fr/10087_11650_000028-0002.wav", 
-            "onyx": "cml-tts/fr/10177_10625_000134-0003.wav",
-            "nova": "cml-tts/fr/12977_10625_000037-0001.wav",
-            "shimmer": "cml-tts/fr/1406_1028_000009-0003.wav"
+        voice_mapping_fr = {
+            "alloy": "cml-tts/fr/2216_1745_000007-0001.wav",
+            "echo": "cml-tts/fr/2223_1745_000009-0002.wav",
+            "fable": "cml-tts/fr/2465_1943_000152-0002.wav",
+            "onyx": "cml-tts/fr/296_1028_000022-0001.wav",
+            "nova": "cml-tts/fr/2114_1656_000053-0001.wav",
+            "shimmer": "cml-tts/fr/2154_2576_000020-0003.wav"
         }
-        
+        voice_mapping_en = {
+            "alloy": "expresso/ex03-ex01_happy_001_channel1_334s.wav",
+            "echo": "expresso/ex04-ex01_happy_001_channel1_334s.wav",
+            "fable": "expresso/ex05-ex01_happy_001_channel1_334s.wav",
+            "onyx": "expresso/ex06-ex01_happy_001_channel1_334s.wav",
+            "nova": "expresso/ex07-ex01_happy_001_channel1_334s.wav",
+            "shimmer": "expresso/ex08-ex01_happy_001_channel1_334s.wav"
+        }
+        voice_mapping = voice_mapping_fr if language == "fr" else voice_mapping_en
         selected_voice = voice_mapping.get(voice, voice_mapping["alloy"])
         
         try:
@@ -206,7 +209,8 @@ async def create_speech(request: SpeechRequest):
         audio_wav_bytes = generate_audio_fast(
             text=request.input,
             voice=request.voice,
-            speed=request.speed
+            speed=request.speed,
+            language=request.language
         )
         
         # Convert to requested format
