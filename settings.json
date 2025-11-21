@@ -66,6 +66,17 @@
     "defaultMode": "bypassPermissions"
   },
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "chmod 644 \"$CLAUDE_FILE_PATH\" && chmod 755 \"$(dirname \"$CLAUDE_FILE_PATH\")\""
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "matcher": "",
@@ -84,10 +95,6 @@
           {
             "type": "command",
             "command": "~/.claude/scripts/stop-timing.sh"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/scripts/notify-last-message.py"
           }
         ]
       }
