@@ -153,6 +153,27 @@ else
     log_info "Utilisation des fichiers par défaut du repository"
 fi
 
+# Copier entrypoint wrapper pour nettoyage cache GPU
+if [ -f "$SCRIPT_DIR/entrypoint-wrapper.sh" ]; then
+    cp "$SCRIPT_DIR/entrypoint-wrapper.sh" scripts/
+    chmod +x scripts/entrypoint-wrapper.sh
+    log_info "Entrypoint wrapper copié (nettoyage cache GPU)"
+fi
+
+# Modifier docker-compose pour utiliser l'entrypoint wrapper
+if [ -f "docker-compose.yaml" ]; then
+    # Ajouter volume scripts et entrypoint si pas déjà présent
+    if ! grep -q "entrypoint-wrapper.sh" docker-compose.yaml; then
+        # Ajouter le volume scripts
+        sed -i '/volumes:/a\      - ./scripts:/app/custom_scripts' docker-compose.yaml
+        # Ajouter l'entrypoint après la ligne deploy ou après volumes
+        sed -i '/deploy:/i\    entrypoint: ["/app/custom_scripts/entrypoint-wrapper.sh"]' docker-compose.yaml
+        # Ajouter la commande originale
+        sed -i '/entrypoint:/a\    command: ["python", "api_server.py"]' docker-compose.yaml
+        log_info "Docker Compose configuré avec entrypoint wrapper"
+    fi
+fi
+
 log_info "Port API configuré: $API_PORT"
 
 echo ""

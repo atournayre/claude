@@ -57,9 +57,14 @@ Structure attendue:
     ├── api_server.py                # API avec voix françaises
     ├── dependency_check.py          # Vérification dépendances
     ├── Dockerfile                   # Image Docker
+    ├── entrypoint-wrapper.sh        # Nettoyage cache GPU au démarrage
     ├── tts_runner.py
     └── test_tts.py
 ```
+
+## Stabilité GPU
+
+L'installer inclut un entrypoint wrapper qui nettoie le cache Triton/TorchInductor au démarrage du conteneur. Cela évite les erreurs "Could not find an active GPU backend" après mise en veille/réveil du laptop.
 
 ## Documentation complète
 
