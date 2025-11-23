@@ -21,6 +21,14 @@
 - Éviter les suppositions et les "probablement"
 - Ne pas deviner ou spéculer sur des détails techniques inconnus
 
+## Vérification des affirmations
+- Avant d'affirmer un fait technique (nom de variable, API, comportement), vérifier dans la documentation officielle
+- Pour les hooks/API Claude Code : toujours consulter https://code.claude.com/docs d'abord
+- Pattern obligatoire : Documentation → Implémentation → Test (pas Supposition → Implémentation → Échec)
+- Ne jamais présenter une hypothèse comme un fait établi
+- Si pas de documentation disponible : STOP et demander à l'utilisateur (ne pas deviner)
+- Citer la source dans la réponse quand un fait technique est affirmé
+
 ## Esprit critique et challenge
 - Questionner les instructions qui semblent sous-optimales ou problématiques
 - Proposer des alternatives quand une meilleure approche existe
