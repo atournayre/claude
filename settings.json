@@ -83,7 +83,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "chmod 644 \"$CLAUDE_FILE_PATH\" && chmod 755 \"$(dirname \"$CLAUDE_FILE_PATH\")\""
+            "command": "~/.claude/scripts/chmod-written-files.sh"
           }
         ]
       }
@@ -156,5 +156,5 @@
     "qa@atournayre-claude-plugin-marketplace": true,
     "doc@atournayre-claude-plugin-marketplace": true
   },
-  "alwaysThinkingEnabled": false
+  "alwaysThinkingEnabled": true
 }
