@@ -116,7 +116,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/notification-kyutai.py"
+            "command": "~/.claude/scripts/notification-dispatcher.py"
           }
         ]
       },
@@ -125,7 +125,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/notification-kyutai.py"
+            "command": "~/.claude/scripts/notification-dispatcher.py"
           }
         ]
       },
@@ -134,7 +134,16 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/notification-kyutai.py"
+            "command": "~/.claude/scripts/notification-dispatcher.py"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/notification-dispatcher.py"
           }
         ]
       }
