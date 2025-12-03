@@ -164,7 +164,9 @@
     "github@atournayre-claude-plugin-marketplace": true,
     "qa@atournayre-claude-plugin-marketplace": true,
     "doc@atournayre-claude-plugin-marketplace": true,
-    "framework@atournayre-claude-plugin-marketplace": true
+    "framework@atournayre-claude-plugin-marketplace": true,
+    "frontend-design@claude-code-plugins": true,
+    "hookify@claude-code-plugins": true
   },
   "companyAnnouncements": [
     "🚀 Ship it!",
