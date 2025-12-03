@@ -163,7 +163,26 @@
     "git@atournayre-claude-plugin-marketplace": true,
     "github@atournayre-claude-plugin-marketplace": true,
     "qa@atournayre-claude-plugin-marketplace": true,
-    "doc@atournayre-claude-plugin-marketplace": true
+    "doc@atournayre-claude-plugin-marketplace": true,
+    "framework@atournayre-claude-plugin-marketplace": true
   },
+  "companyAnnouncements": [
+    "🚀 Ship it!",
+    "☕ Code. Coffee. Repeat.",
+    "🧹 Clean code, clean mind",
+    "🔥 Let's burn some bugs today",
+    "💡 KISS: Keep It Simple, Stupid",
+    "🎯 Focus. Build. Ship.",
+    "🐛 Bugs are just undocumented features",
+    "⚡ Make it work, make it right, make it fast",
+    "🧠 Think twice, code once",
+    "🎸 Code like nobody's watching",
+    "🏛️ Objects over data structures",
+    "💎 Immutability is your friend",
+    "🚫 No getters, no setters, no regrets",
+    "📦 Small objects, big impact",
+    "🎭 Tell, don't ask",
+    "🤔 Testing is doubting!"
+  ],
   "alwaysThinkingEnabled": true
 }
