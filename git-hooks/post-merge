@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+CHANGED_FILES=$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)
+
+echo "🔄 Post-merge hook : vérification des changements..."
+
+# Vérifier si settings.json a changé
+if echo "$CHANGED_FILES" | grep -q "settings.json"; then
+    echo "⚠️  settings.json a été mis à jour"
+    echo "   Vérifiez et fusionnez avec settings.json.backup si nécessaire"
+fi
+
+# Vérifier si les marketplaces ont changé
+if echo "$CHANGED_FILES" | grep -q "plugins/"; then
+    echo "📦 Mise à jour des marketplaces..."
+    claude plugin marketplace update 2>/dev/null || echo "⚠️  Échec mise à jour marketplaces (continuez manuellement)"
+fi
+
+# Vérifier si install.sh a changé
+if echo "$CHANGED_FILES" | grep -q "install.sh"; then
+    echo "🔧 install.sh a été mis à jour"
+    echo "   Relancez-le si nécessaire : ~/.claude/install.sh"
+fi
+
+echo "✅ Post-merge terminé"

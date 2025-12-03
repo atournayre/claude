@@ -42,6 +42,12 @@ echo "📦 Installation des marketplaces..."
 claude plugin marketplace add atournayre/claude-marketplace
 claude plugin marketplace add anthropics/claude-code
 
+# Installer les git hooks
+if [ -f "$CLAUDE_DIR/git-hooks/install-hooks.sh" ]; then
+    echo "🔗 Installation des git hooks..."
+    bash "$CLAUDE_DIR/git-hooks/install-hooks.sh"
+fi
+
 echo ""
 echo "✨ Installation terminée!"
 echo ""

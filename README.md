@@ -11,6 +11,9 @@ Configuration personnalisée pour [Claude Code](https://claude.com/claude-code) 
 ├── commands/                  # Slash commands personnalisées (non versionnées)
 ├── hooks/                     # Hooks personnalisés (non versionnés)
 ├── plugins/                   # Plugins installés (non versionnés)
+├── git-hooks/                 # Git hooks pour automatisation
+│   ├── post-merge             # Hook exécuté après git pull/merge
+│   └── install-hooks.sh       # Script installation hooks
 ├── scripts/                   # Scripts utilitaires
 │   ├── kyutai-tts-installer/  # Installer Kyutai TTS
 │   ├── notification-kyutai.sh # Hook notifications vocales
@@ -115,10 +118,33 @@ chmod +x install.sh
 
 1. Vérifiez et fusionnez manuellement vos paramètres personnels depuis `settings.json.backup` si nécessaire
 
-2. Installez les marketplaces :
-   ```bash
-   /plugin marketplace add atournayre/claude-marketplace
-   ```
+2. Les marketplaces sont installés automatiquement par le script
+
+3. Les git hooks sont installés automatiquement - ils détectent et gèrent :
+   - Changements dans `settings.json` → avertissement
+   - Modifications plugins → mise à jour marketplaces
+   - Changements `install.sh` → notification
+
+## Git Hooks
+
+Hooks automatiques pour maintenir votre configuration à jour après `git pull`.
+
+**Hook post-merge** détecte automatiquement :
+- `settings.json` modifié → avertit de vérifier/fusionner
+- Fichiers plugins modifiés → met à jour les marketplaces
+- `install.sh` modifié → suggère de relancer
+
+**Installation manuelle** (déjà fait par `install.sh`) :
+```bash
+bash ~/.claude/git-hooks/install-hooks.sh
+```
+
+**Test** :
+```bash
+git pull  # Hook s'exécute automatiquement
+# ou test direct :
+~/.git/hooks/post-merge
+```
 
 ## Fichiers ignorés
 
