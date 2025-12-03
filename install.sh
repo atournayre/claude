@@ -37,10 +37,15 @@ if [ -d "$BACKUP_DIR" ]; then
     echo "✅ Backup conservé dans $BACKUP_DIR"
 fi
 
+# Installer les marketplaces
+echo "📦 Installation des marketplaces..."
+claude plugin marketplace add atournayre/claude-marketplace
+claude plugin marketplace add anthropics/claude-code
+
 echo ""
 echo "✨ Installation terminée!"
 echo ""
 echo "📝 Prochaines étapes:"
 echo "   1. Vérifiez settings.json et fusionnez settings.json.backup si nécessaire"
-echo "   2. Installez les marketplaces: /plugin marketplace add atournayre/claude-marketplace"
+echo "   2. Activez les plugins souhaités dans settings.json"
 echo ""
