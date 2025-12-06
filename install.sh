@@ -54,10 +54,16 @@ if [ -d "$BACKUP_DIR" ]; then
     echo "✅ Contenu restauré. Backup conservé dans $BACKUP_DIR"
 fi
 
-# Installer les marketplaces
-echo "📦 Installation des marketplaces..."
-claude plugin marketplace add atournayre/claude-marketplace
-claude plugin marketplace add anthropics/claude-code
+# Installer les marketplaces (si claude CLI disponible)
+if command -v claude &> /dev/null; then
+    echo "📦 Installation des marketplaces..."
+    claude plugin marketplace add atournayre/claude-marketplace
+    claude plugin marketplace add anthropics/claude-code
+else
+    echo "⚠️  Claude CLI non trouvé. Marketplaces à installer manuellement:"
+    echo "   claude plugin marketplace add atournayre/claude-marketplace"
+    echo "   claude plugin marketplace add anthropics/claude-code"
+fi
 
 # Installer les git hooks
 if [ -f "$CLAUDE_DIR/git-hooks/install-hooks.sh" ]; then
