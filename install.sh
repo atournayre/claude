@@ -4,37 +4,54 @@ set -e
 
 CLAUDE_DIR="$HOME/.claude"
 BACKUP_DIR="$HOME/.claude.backup.$(date +%s)"
+TEMP_CLONE_DIR="$HOME/.claude.temp.$$"
 REPO_URL="git@github.com:atournayre/claude.git"
 
+# Fichiers/dossiers gérés par le repo (à ne pas restaurer depuis le backup)
+REPO_MANAGED="\.git|install\.sh|README\.md|\.gitignore|git-hooks"
+
 echo "🔍 Vérification de l'installation..."
+
+# Cloner d'abord dans un répertoire temporaire (fail-safe)
+echo "📥 Clonage du repository..."
+if ! git clone "$REPO_URL" "$TEMP_CLONE_DIR"; then
+    echo "❌ Échec du clonage. Aucune modification effectuée."
+    rm -rf "$TEMP_CLONE_DIR"
+    exit 1
+fi
 
 # Sauvegarder si le répertoire existe
 if [ -d "$CLAUDE_DIR" ]; then
     echo "📦 Sauvegarde du contenu existant dans $BACKUP_DIR..."
-    cp -r "$CLAUDE_DIR" "$BACKUP_DIR"
-    rm -rf "$CLAUDE_DIR"
+    mv "$CLAUDE_DIR" "$BACKUP_DIR"
 fi
 
-# Cloner le repo
-echo "📥 Clonage du repository..."
-git clone "$REPO_URL" "$CLAUDE_DIR"
+# Déplacer le clone vers sa destination finale
+mv "$TEMP_CLONE_DIR" "$CLAUDE_DIR"
 
-# Restaurer le contenu sauvegardé
+# Restaurer TOUT le contenu sauvegardé (sauf fichiers du repo)
 if [ -d "$BACKUP_DIR" ]; then
     echo "♻️  Restauration du contenu personnel..."
 
-    # Restaurer commands, hooks, plugins
-    [ -d "$BACKUP_DIR/commands" ] && cp -r "$BACKUP_DIR/commands" "$CLAUDE_DIR/"
-    [ -d "$BACKUP_DIR/hooks" ] && cp -r "$BACKUP_DIR/hooks" "$CLAUDE_DIR/"
-    [ -d "$BACKUP_DIR/plugins" ] && cp -r "$BACKUP_DIR/plugins" "$CLAUDE_DIR/"
+    # Restaurer tous les fichiers/dossiers non gérés par le repo
+    for item in "$BACKUP_DIR"/*; do
+        [ -e "$item" ] || continue
+        basename=$(basename "$item")
+        if [[ ! "$basename" =~ ^($REPO_MANAGED)$ ]]; then
+            cp -r "$item" "$CLAUDE_DIR/"
+        fi
+    done
 
-    # Sauvegarder settings.json existant
-    if [ -f "$BACKUP_DIR/settings.json" ]; then
-        echo "⚠️  settings.json existant sauvegardé dans $CLAUDE_DIR/settings.json.backup"
-        cp "$BACKUP_DIR/settings.json" "$CLAUDE_DIR/settings.json.backup"
-    fi
+    # Restaurer les fichiers cachés aussi
+    for item in "$BACKUP_DIR"/.*; do
+        [ -e "$item" ] || continue
+        basename=$(basename "$item")
+        [[ "$basename" =~ ^\.{1,2}$ ]] && continue
+        [[ "$basename" == ".git" ]] && continue
+        cp -r "$item" "$CLAUDE_DIR/"
+    done
 
-    echo "✅ Backup conservé dans $BACKUP_DIR"
+    echo "✅ Contenu restauré. Backup conservé dans $BACKUP_DIR"
 fi
 
 # Installer les marketplaces
