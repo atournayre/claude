@@ -1,33 +1,101 @@
-# Enterprise Network Configuration for Claude Code
+# Enterprise network configuration
 
-**Source:** https://docs.claude.com/en/docs/claude-code/network-config.md
-**Extrait le:** 2025-11-02
+**Source:** https://code.claude.com/docs/en/network-config.md
+**Extrait le:** 2025-12-10
 **Sujet:** Network Configuration - Configuration réseau entreprise
 
 ---
 
-# Enterprise Network Configuration for Claude Code
+> Configure Claude Code for enterprise environments with proxy servers, custom Certificate Authorities (CA), and mutual Transport Layer Security (mTLS) authentication.
 
-Claude Code enables secure enterprise connectivity through configurable environment variables supporting proxies, custom certificate authorities, and mutual TLS authentication.
+Claude Code supports various enterprise network and security configurations through environment variables. This includes routing traffic through corporate proxy servers, trusting custom Certificate Authorities (CA), and authenticating with mutual Transport Layer Security (mTLS) certificates for enhanced security.
 
-## Key Configuration Options
+<Note>
+  All environment variables shown on this page can also be configured in [`settings.json`](/en/settings).
+</Note>
 
-**Proxy Setup**: Claude Code respects standard proxy variables (HTTPS_PROXY, HTTP_PROXY, NO_PROXY). The documentation notes that "Claude Code does not support SOCKS proxies" and recommends using HTTPS proxies when available.
+## Proxy configuration
 
-**Custom Certificates**: Organizations using internal CAs can configure trust via the NODE_EXTRA_CA_CERTS environment variable pointing to their certificate file.
+### Environment variables
 
-**Client Authentication**: For mTLS requirements, set CLAUDE_CODE_CLIENT_CERT and CLAUDE_CODE_CLIENT_KEY variables, with optional passphrase support.
+Claude Code respects standard proxy environment variables:
 
-## Required Network Access
+```bash  theme={null}
+# HTTPS proxy (recommended)
+export HTTPS_PROXY=https://proxy.example.com:8080
 
-Claude Code needs connectivity to four primary endpoints:
-- api.anthropic.com (API services)
-- claude.ai (WebFetch safeguards)
-- statsig.anthropic.com (telemetry)
-- sentry.io (error reporting)
+# HTTP proxy (if HTTPS not available)
+export HTTP_PROXY=http://proxy.example.com:8080
 
-## Security Recommendations
+# Bypass proxy for specific requests - space-separated format
+export NO_PROXY="localhost 192.168.1.1 example.com .example.com"
+# Bypass proxy for specific requests - comma-separated format
+export NO_PROXY="localhost,192.168.1.1,example.com,.example.com"
+# Bypass proxy for all requests
+export NO_PROXY="*"
+```
 
-The documentation advises against hardcoding credentials in scripts, suggesting environment variables or secure credential storage instead. For authentication methods like NTLM or Kerberos, using an LLM Gateway service is recommended as an alternative approach.
+<Note>
+  Claude Code does not support SOCKS proxies.
+</Note>
 
-All settings can alternatively be configured in the `settings.json` file rather than environment variables.
+### Basic authentication
+
+If your proxy requires basic authentication, include credentials in the proxy URL:
+
+```bash  theme={null}
+export HTTPS_PROXY=http://username:password@proxy.example.com:8080
+```
+
+<Warning>
+  Avoid hardcoding passwords in scripts. Use environment variables or secure credential storage instead.
+</Warning>
+
+<Tip>
+  For proxies requiring advanced authentication (NTLM, Kerberos, etc.), consider using an LLM Gateway service that supports your authentication method.
+</Tip>
+
+## Custom CA certificates
+
+If your enterprise environment uses custom CAs for HTTPS connections (whether through a proxy or direct API access), configure Claude Code to trust them:
+
+```bash  theme={null}
+export NODE_EXTRA_CA_CERTS=/path/to/ca-cert.pem
+```
+
+## mTLS authentication
+
+For enterprise environments requiring client certificate authentication:
+
+```bash  theme={null}
+# Client certificate for authentication
+export CLAUDE_CODE_CLIENT_CERT=/path/to/client-cert.pem
+
+# Client private key
+export CLAUDE_CODE_CLIENT_KEY=/path/to/client-key.pem
+
+# Optional: Passphrase for encrypted private key
+export CLAUDE_CODE_CLIENT_KEY_PASSPHRASE="your-passphrase"
+```
+
+## Network access requirements
+
+Claude Code requires access to the following URLs:
+
+* `api.anthropic.com` - Claude API endpoints
+* `claude.ai` - WebFetch safeguards
+* `statsig.anthropic.com` - Telemetry and metrics
+* `sentry.io` - Error reporting
+
+Ensure these URLs are allowlisted in your proxy configuration and firewall rules. This is especially important when using Claude Code in containerized or restricted network environments.
+
+## Additional resources
+
+* [Claude Code settings](/en/settings)
+* [Environment variables reference](/en/settings#environment-variables)
+* [Troubleshooting guide](/en/troubleshooting)
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://code.claude.com/docs/llms.txt

@@ -1,12 +1,10 @@
 # Claude Code on Google Vertex AI
 
-**Source:** https://docs.claude.com/en/docs/claude-code/google-vertex-ai.md
-**Extrait le:** 2025-11-02
-**Sujet:** Deployment - Google Vertex AI
+**Source:** https://code.claude.com/docs/en/google-vertex-ai.md
+**Extrait le:** 2025-12-10
+**Sujet:** Google Vertex AI - Configuration et déploiement
 
 ---
-
-# Claude Code on Google Vertex AI
 
 > Learn about configuring Claude Code through Google Vertex AI, including setup, IAM configuration, and troubleshooting.
 
@@ -16,7 +14,7 @@ Before configuring Claude Code with Vertex AI, ensure you have:
 
 * A Google Cloud Platform (GCP) account with billing enabled
 * A GCP project with Vertex AI API enabled
-* Access to desired Claude models (e.g., Claude Sonnet 4.5)
+* Access to desired Claude models (for example, Claude Sonnet 4.5)
 * Google Cloud SDK (`gcloud`) installed and configured
 * Quota allocated in desired GCP region
 
@@ -52,7 +50,7 @@ Request access to Claude models in Vertex AI:
 
 1. Navigate to the [Vertex AI Model Garden](https://console.cloud.google.com/vertex-ai/model-garden)
 2. Search for "Claude" models
-3. Request access to desired Claude models (e.g., Claude Sonnet 4.5)
+3. Request access to desired Claude models (for example, Claude Sonnet 4.5)
 4. Wait for approval (may take 24-48 hours)
 
 ### 3. Configure GCP credentials
@@ -90,7 +88,7 @@ export VERTEX_REGION_CLAUDE_4_1_OPUS=europe-west1
 ```
 
 <Note>
-  [Prompt caching](/en/docs/build-with-claude/prompt-caching) is automatically supported when you specify the `cache_control` ephemeral flag. To disable it, set `DISABLE_PROMPT_CACHING=1`. For heightened rate limits, contact Google Cloud support.
+  [Prompt caching](https://docs.claude.com/en/docs/build-with-claude/prompt-caching) is automatically supported when you specify the `cache_control` ephemeral flag. To disable it, set `DISABLE_PROMPT_CACHING=1`. For heightened rate limits, contact Google Cloud support.
 </Note>
 
 <Note>
@@ -107,7 +105,7 @@ Claude Code uses these default models for Vertex AI:
 | Small/fast model | `claude-haiku-4-5@20251001`  |
 
 <Note>
-  For Vertex AI users, Claude Code will not automatically upgrade from Haiku 3.5 to Haiku 4.5. To manually switch to a newer Haiku model, set the `ANTHROPIC_DEFAULT_HAIKU_MODEL` environment variable to the full model name (e.g., `claude-haiku-4-5@20251001`).
+  For Vertex AI users, Claude Code will not automatically upgrade from Haiku 3.5 to Haiku 4.5. To manually switch to a newer Haiku model, set the `ANTHROPIC_DEFAULT_HAIKU_MODEL` environment variable to the full model name (for example, `claude-haiku-4-5@20251001`).
 </Note>
 
 To customize models:
@@ -135,7 +133,7 @@ For details, see [Vertex IAM documentation](https://cloud.google.com/vertex-ai/d
 
 ## 1M token context window
 
-Claude Sonnet 4 and Sonnet 4.5 support the [1M token context window](/en/docs/build-with-claude/context-windows#1m-token-context-window) on Vertex AI.
+Claude Sonnet 4 and Sonnet 4.5 support the [1M token context window](https://docs.claude.com/en/docs/build-with-claude/context-windows#1m-token-context-window) on Vertex AI.
 
 <Note>
   The 1M token context window is currently in beta. To use the extended context window, include the `context-1m-2025-08-07` beta header in your Vertex AI requests.
@@ -165,3 +163,8 @@ If you encounter 429 errors:
 * [Vertex AI documentation](https://cloud.google.com/vertex-ai/docs)
 * [Vertex AI pricing](https://cloud.google.com/vertex-ai/pricing)
 * [Vertex AI quotas and limits](https://cloud.google.com/vertex-ai/docs/quotas)
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://code.claude.com/docs/llms.txt

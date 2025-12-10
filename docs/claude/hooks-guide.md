@@ -1,8 +1,8 @@
 # Get started with Claude Code hooks
 
-**Source:** https://docs.claude.com/en/docs/claude-code/hooks-guide.md
-**Extrait le:** 2025-11-02
-**Sujet:** Guide des hooks Claude Code - Personnalisation et extension du comportement
+**Source:** https://code.claude.com/docs/en/hooks-guide.md
+**Extrait le:** 2025-12-10
+**Sujet:** Hooks Guide - Automatisation et personnalisation via hooks
 
 ---
 
@@ -14,7 +14,7 @@ Code's behavior, ensuring certain actions always happen rather than relying on
 the LLM to choose to run them.
 
 <Tip>
-  For reference documentation on hooks, see [Hooks reference](/en/docs/claude-code/hooks).
+  For reference documentation on hooks, see [Hooks reference](/en/hooks).
 </Tip>
 
 Example use cases for hooks include:
@@ -37,7 +37,7 @@ suggestions into app-level code that executes every time it is expected to run.
   You must consider the security implication of hooks as you add them, because hooks run automatically during the agent loop with your current environment's credentials.
   For example, malicious hooks code can exfiltrate your data. Always review your hooks implementation before registering them.
 
-  For full security best practices, see [Security Considerations](/en/docs/claude-code/hooks#security-considerations) in the hooks reference documentation.
+  For full security best practices, see [Security Considerations](/en/hooks#security-considerations) in the hooks reference documentation.
 </Warning>
 
 ## Hook Events Overview
@@ -46,6 +46,7 @@ Claude Code provides several hook events that run at different points in the
 workflow:
 
 * **PreToolUse**: Runs before tool calls (can block them)
+* **PermissionRequest**: Runs when a permission dialog is shown (can allow or deny)
 * **PostToolUse**: Runs after tool calls complete
 * **UserPromptSubmit**: Runs when the user submits a prompt, before Claude processes it
 * **Notification**: Runs when Claude Code sends notifications
@@ -69,7 +70,7 @@ Install `jq` for JSON processing in the command line.
 
 ### Step 1: Open hooks configuration
 
-Run the `/hooks` [slash command](/en/docs/claude-code/slash-commands) and select
+Run the `/hooks` [slash command](/en/slash-commands) and select
 the `PreToolUse` hook event.
 
 `PreToolUse` hooks run before tool calls and can block them while providing
@@ -87,7 +88,7 @@ Type `Bash` for the matcher.
 
 Select `+ Add new hook…` and enter this command:
 
-```bash
+```bash  theme={null}
 jq -r '"\(.tool_input.command) - \(.tool_input.description // "No description")"' >> ~/.claude/bash-command-log.txt
 ```
 
@@ -97,13 +98,13 @@ For storage location, select `User settings` since you're logging to your home
 directory. This hook will then apply to all projects, not just your current
 project.
 
-Then press Esc until you return to the REPL. Your hook is now registered!
+Then press `Esc` until you return to the REPL. Your hook is now registered.
 
 ### Step 5: Verify your hook
 
 Run `/hooks` again or check `~/.claude/settings.json` to see your configuration:
 
-```json
+```json  theme={null}
 {
   "hooks": {
     "PreToolUse": [
@@ -125,7 +126,7 @@ Run `/hooks` again or check `~/.claude/settings.json` to see your configuration:
 
 Ask Claude to run a simple command like `ls` and check your log file:
 
-```bash
+```bash  theme={null}
 cat ~/.claude/bash-command-log.txt
 ```
 
@@ -145,7 +146,7 @@ ls - Lists files and directories
 
 Automatically format TypeScript files after editing:
 
-```json
+```json  theme={null}
 {
   "hooks": {
     "PostToolUse": [
@@ -167,7 +168,7 @@ Automatically format TypeScript files after editing:
 
 Automatically fix missing language tags and formatting issues in markdown files:
 
-```json
+```json  theme={null}
 {
   "hooks": {
     "PostToolUse": [
@@ -187,7 +188,7 @@ Automatically fix missing language tags and formatting issues in markdown files:
 
 Create `.claude/hooks/markdown_formatter.py` with this content:
 
-```python
+````python  theme={null}
 #!/usr/bin/env python3
 """
 Markdown formatter for Claude Code output.
@@ -271,11 +272,11 @@ try:
 except Exception as e:
     print(f"Error formatting markdown: {e}", file=sys.stderr)
     sys.exit(1)
-```
+````
 
 Make the script executable:
 
-```bash
+```bash  theme={null}
 chmod +x .claude/hooks/markdown_formatter.py
 ```
 
@@ -290,7 +291,7 @@ This hook automatically:
 
 Get desktop notifications when Claude needs input:
 
-```json
+```json  theme={null}
 {
   "hooks": {
     "Notification": [
@@ -312,7 +313,7 @@ Get desktop notifications when Claude needs input:
 
 Block edits to sensitive files:
 
-```json
+```json  theme={null}
 {
   "hooks": {
     "PreToolUse": [
@@ -332,7 +333,12 @@ Block edits to sensitive files:
 
 ## Learn more
 
-* For reference documentation on hooks, see [Hooks reference](/en/docs/claude-code/hooks).
-* For comprehensive security best practices and safety guidelines, see [Security Considerations](/en/docs/claude-code/hooks#security-considerations) in the hooks reference documentation.
-* For troubleshooting steps and debugging techniques, see [Debugging](/en/docs/claude-code/hooks#debugging) in the hooks reference
+* For reference documentation on hooks, see [Hooks reference](/en/hooks).
+* For comprehensive security best practices and safety guidelines, see [Security Considerations](/en/hooks#security-considerations) in the hooks reference documentation.
+* For troubleshooting steps and debugging techniques, see [Debugging](/en/hooks#debugging) in the hooks reference
   documentation.
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://code.claude.com/docs/llms.txt
