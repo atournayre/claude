@@ -168,6 +168,7 @@
     "frontend-design@claude-code-plugins": true,
     "hookify@claude-code-plugins": true
   },
+  "alwaysThinkingEnabled": false,
   "companyAnnouncements": [
     "🚀 Ship it!",
     "☕ Code. Coffee. Repeat.",
@@ -185,6 +186,5 @@
     "📦 Small objects, big impact",
     "🎭 Tell, don't ask",
     "🤔 Testing is doubting!"
-  ],
-  "alwaysThinkingEnabled": true
+  ]
 }

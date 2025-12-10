@@ -7,10 +7,11 @@
 # Configuration personnelle
 commands/
 hooks/
+plugins/cache/
 plugins/marketplaces/
 plugins/repos/
 plugins/known_marketplaces.json
-plugins/installed_plugins.json
+plugins/installed_plugins*.json
 !plugins/config.json
 
 # Fichiers d'historique et de session (volumineux et temporaires)
