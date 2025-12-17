@@ -165,10 +165,13 @@
     "qa@atournayre-claude-plugin-marketplace": true,
     "doc@atournayre-claude-plugin-marketplace": true,
     "framework@atournayre-claude-plugin-marketplace": true,
-    "frontend-design@claude-code-plugins": true,
-    "hookify@claude-code-plugins": true
+    "frontend-design@claude-code-plugins": false,
+    "hookify@claude-code-plugins": false,
+    "gemini@atournayre-claude-plugin-marketplace": true,
+    "plugin-dev@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": false,
   "companyAnnouncements": [
     "🚀 Ship it!",
     "☕ Code. Coffee. Repeat.",
