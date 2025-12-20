@@ -26,7 +26,12 @@ debug/
 logs/
 *.log
 
+# Fichiers générés (spécifiques à la machine)
+chrome/
+
 # Données temporaires et cache
+plans/
+stats-cache.json
 todos/
 statsig/
 local/

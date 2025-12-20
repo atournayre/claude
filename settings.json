@@ -149,11 +149,6 @@
       }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/status-line/statusline.sh",
-    "padding": 0
-  },
   "enabledPlugins": {
     "claude@atournayre-claude-plugin-marketplace": true,
     "customize@atournayre-claude-plugin-marketplace": true,
@@ -170,7 +165,9 @@
     "gemini@atournayre-claude-plugin-marketplace": true,
     "plugin-dev@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
-    "hookify@claude-plugins-official": true
+    "hookify@claude-plugins-official": false,
+    "review@atournayre-claude-plugin-marketplace": true,
+    "marketing@atournayre-claude-plugin-marketplace": true
   },
   "companyAnnouncements": [
     "🚀 Ship it!",
@@ -189,5 +186,10 @@
     "📦 Small objects, big impact",
     "🎭 Tell, don't ask",
     "🤔 Testing is doubting!"
-  ]
+  ],
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  }
 }
