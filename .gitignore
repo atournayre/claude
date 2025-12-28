@@ -60,3 +60,4 @@ Thumbs.db
 # Temp
 old_commands
 .claude/tmp/
+/plugins/install-counts-cache.json
