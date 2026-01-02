@@ -1,0 +1,76 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/check-kyutai-service.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/notification-dispatcher.py"
+          }
+        ]
+      },
+      {
+        "matcher": "auth_success",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/notification-dispatcher.py"
+          }
+        ]
+      },
+      {
+        "matcher": "elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/notification-dispatcher.py"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/notification-dispatcher.py"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  },
+  "companyAnnouncements": [
+    "🚀 Ship it!",
+    "☕ Code. Coffee. Repeat.",
+    "🧹 Clean code, clean mind",
+    "🔥 Let's burn some bugs today",
+    "💡 KISS: Keep It Simple, Stupid",
+    "🎯 Focus. Build. Ship.",
+    "🐛 Bugs are just undocumented features",
+    "⚡ Make it work, make it right, make it fast",
+    "🧠 Think twice, code once",
+    "🎸 Code like nobody's watching",
+    "🏛️ Objects over data structures",
+    "💎 Immutability is your friend",
+    "🚫 No getters, no setters, no regrets",
+    "📦 Small objects, big impact",
+    "🎭 Tell, don't ask",
+    "🤔 Testing is doubting!"
+  ]
+}
