@@ -90,6 +90,7 @@ Serveurs installés:
 - **Sentry**: Monitoring erreurs et performance
 - **Chrome DevTools**: Debug navigateur en temps réel
 - **Context7**: Documentation code pour LLMs (repos GitHub/GitLab)
+- **n8n**: Workflows d'automatisation et intégrations
 
 ## Installation
 

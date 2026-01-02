@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "n8n-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "supergateway",
+        "--streamableHttp",
+        "http://localhost:5678/mcp-server/http",
+        "--header",
+        "authorization:Bearer ${N8N_MCP_TOKEN}"
+      ]
+    }
+  }
+}

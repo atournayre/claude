@@ -134,6 +134,56 @@ claude --mcp-config ~/.claude/mcp/context7.json --strict-mcp-config --append-sys
 
 </details>
 
+<details>
+<summary><strong>n8n</strong></summary>
+
+**Fichier**: `mcp/n8n.json`
+**Type**: NPX (via Supergateway)
+**Usage**: Workflows d'automatisation et intégrations avec n8n
+
+**Configuration**:
+```json
+{
+  "mcpServers": {
+    "n8n-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "supergateway",
+        "--streamableHttp",
+        "http://localhost:5678/mcp-server/http",
+        "--header",
+        "authorization:Bearer ${N8N_MCP_TOKEN}"
+      ]
+    }
+  }
+}
+```
+
+**Prérequis**:
+1. Instance n8n lancée localement sur port 5678
+2. Token JWT valide pour authentification MCP (obtenu via n8n)
+3. Variable d'env `N8N_MCP_TOKEN` dans `~/.bashrc` ou `~/.zshrc`:
+   ```bash
+   export N8N_MCP_TOKEN="votre_token_jwt"
+   ```
+4. Recharger shell : `source ~/.bashrc`
+5. NPX installé
+
+**Fonctionnalités**:
+- Création et gestion workflows
+- Exécution workflows
+- Accès aux nodes et connecteurs n8n
+- Intégrations avec services externes
+- Gestion des variables et credentials
+
+**Lancer uniquement n8n**:
+```bash
+claude --mcp-config ~/.claude/mcp/n8n.json --strict-mcp-config
+```
+
+</details>
+
 ## Ajouter un nouveau serveur MCP
 
 1. Créer fichier JSON dans `~/.claude/mcp/`:
