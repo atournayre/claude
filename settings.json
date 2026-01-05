@@ -5,7 +5,7 @@
     "KYUTAI_LANGUAGE": "fr",
     "KYUTAI_VOICE": "onyx"
   },
-  "includeCoAuthoredBy": false,
+  "includeCoAuthoredBy": true,
   "permissions": {
     "allow": [
       "Bash(./vendor/bin/phpstan:*)",
@@ -65,7 +65,7 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "model": "haiku",
+  "model": "sonnet",
   "hooks": {
     "PostToolUse": [
       {
@@ -93,8 +93,8 @@
     "frontend-design@claude-code-plugins": false,
     "hookify@claude-code-plugins": false,
     "gemini@atournayre-claude-plugin-marketplace": true,
-    "plugin-dev@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false,
     "hookify@claude-plugins-official": false,
     "review@atournayre-claude-plugin-marketplace": true,
     "marketing@atournayre-claude-plugin-marketplace": true
