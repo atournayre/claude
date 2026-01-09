@@ -66,6 +66,7 @@
     "defaultMode": "bypassPermissions"
   },
   "model": "sonnet",
+  "language": "french",
   "hooks": {
     "PostToolUse": [
       {
@@ -98,5 +99,10 @@
     "hookify@claude-plugins-official": false,
     "review@atournayre-claude-plugin-marketplace": true,
     "marketing@atournayre-claude-plugin-marketplace": true
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
   }
 }
