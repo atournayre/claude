@@ -38,6 +38,8 @@ local/
 task/
 ide/
 data/
+cache/
+paste-cache/
 
 # Rapports (peuvent être regénérés)
 reports/
