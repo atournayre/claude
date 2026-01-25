@@ -66,7 +66,6 @@
     "defaultMode": "bypassPermissions"
   },
   "model": "sonnet",
-  "language": "french",
   "hooks": {
     "PostToolUse": [
       {
@@ -79,6 +78,11 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
   },
   "enabledPlugins": {
     "claude@atournayre-claude-plugin-marketplace": true,
@@ -98,11 +102,16 @@
     "frontend-design@claude-plugins-official": false,
     "hookify@claude-plugins-official": false,
     "review@atournayre-claude-plugin-marketplace": true,
-    "marketing@atournayre-claude-plugin-marketplace": true
+    "marketing@atournayre-claude-plugin-marketplace": true,
+    "ralph-loop@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "sentry@claude-plugins-official": true,
+    "php-lsp@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true
   },
-  "statusLine": {
-    "type": "command",
-    "command": "npx -y ccstatusline@latest",
-    "padding": 0
-  }
+  "language": "french"
 }

@@ -1,0 +1,1 @@
+Pour tester des fonctionnalités web, utilise Chrome de manière proactive. Si aucune page de test pertinente n'existe, demande l'URL à l'utilisateur.

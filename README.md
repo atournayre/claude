@@ -48,6 +48,22 @@ Défini dans `CLAUDE.md`:
 - Toujours écrire des tests
 - Éviter phrases trop positives
 
+## Prompts Système
+
+Prompts additionnels stockés dans `prompts/append-system/`:
+
+**Chrome** (`chrome.txt`):
+Force l'utilisation de Chrome pour tester les fonctionnalités web.
+
+Usage:
+```bash
+# Mode print
+claude -p --append-system-prompt-file ~/.claude/prompts/append-system/chrome.txt "query"
+
+# Mode interactif
+claude --append-system-prompt "$(cat ~/.claude/prompts/append-system/chrome.txt)"
+```
+
 ## Permissions
 
 Auto-approuvées (défini dans `settings.json`):

@@ -40,6 +40,7 @@ ide/
 data/
 cache/
 paste-cache/
+tasks
 
 # Rapports (peuvent être regénérés)
 reports/
