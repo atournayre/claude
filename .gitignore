@@ -41,6 +41,7 @@ data/
 cache/
 paste-cache/
 tasks
+notifications/queue.jsonl
 
 # Rapports (peuvent être regénérés)
 reports/

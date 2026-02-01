@@ -3,7 +3,8 @@
     "CLAUDE_NOTIFY_ERRORS": "true",
     "ENGINEER_NAME": "Aurélien",
     "KYUTAI_LANGUAGE": "fr",
-    "KYUTAI_VOICE": "onyx"
+    "KYUTAI_VOICE": "onyx",
+    "CLAUDE_NOTIFICATION_DISPATCHER": "notify-send"
   },
   "includeCoAuthoredBy": true,
   "permissions": {
@@ -65,7 +66,7 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
     "PostToolUse": [
       {
@@ -99,8 +100,6 @@
     "hookify@claude-code-plugins": false,
     "gemini@atournayre-claude-plugin-marketplace": true,
     "plugin-dev@claude-plugins-official": false,
-    "frontend-design@claude-plugins-official": false,
-    "hookify@claude-plugins-official": false,
     "review@atournayre-claude-plugin-marketplace": true,
     "marketing@atournayre-claude-plugin-marketplace": true,
     "ralph-loop@claude-plugins-official": true,
@@ -109,9 +108,12 @@
     "context7@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "sentry@claude-plugins-official": true,
-    "php-lsp@claude-plugins-official": true,
+    "php-lsp@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
-    "claude-code-setup@claude-plugins-official": true
+    "claude-code-setup@claude-plugins-official": true,
+    "prompt@atournayre-claude-plugin-marketplace": true,
+    "command@atournayre-claude-plugin-marketplace": true,
+    "notifications@atournayre-claude-plugin-marketplace": true
   },
   "language": "french"
 }

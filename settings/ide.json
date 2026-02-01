@@ -14,38 +14,11 @@
     ],
     "Notification": [
       {
-        "matcher": "permission_prompt",
+        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/notification-dispatcher.py"
-          }
-        ]
-      },
-      {
-        "matcher": "auth_success",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/scripts/notification-dispatcher.py"
-          }
-        ]
-      },
-      {
-        "matcher": "elicitation_dialog",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/scripts/notification-dispatcher.py"
-          }
-        ]
-      },
-      {
-        "matcher": "idle_prompt",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/scripts/notification-dispatcher.py"
+            "command": "~/.claude/plugins/marketplaces/atournayre-claude-plugin-marketplace/notifications/hooks/notification.py --desktop && ~/.claude/plugins/marketplaces/atournayre-claude-plugin-marketplace/notifications/scripts/dispatch-notifications.py"
           }
         ]
       }

@@ -98,6 +98,89 @@ cd ~/.claude/scripts/kyutai-tts-installer
 
 Prérequis: Docker + GPU NVIDIA (8GB+ VRAM)
 
+## Notifications Desktop
+
+Notifications desktop visuelles pour les événements clés de Claude Code, avec emojis spécifiques par type et affichage du titre de session (si défini via `/rename`).
+
+### Types de notifications
+
+| Type | Emoji | Description |
+|------|-------|-------------|
+| `permission_prompt` | 🔐 | Demandes de permission |
+| `idle_prompt` | ⏰ | Attente input utilisateur (60+ sec) |
+| `auth_success` | ✅ | Authentification réussie |
+| `elicitation_dialog` | ❓ | Input requis pour MCP |
+| Tâche terminée | ✅ | Fin de session principale |
+| Sous-agent terminé | 🤖 | Fin de sous-agent |
+
+### Configuration
+
+Les notifications desktop sont configurées dans `settings.json` :
+
+```json
+{
+  "env": {
+    "CLAUDE_DESKTOP_NOTIFY": "true",
+    "CLAUDE_DESKTOP_NOTIFY_URGENCY": "normal",
+    "CLAUDE_DESKTOP_NOTIFY_TIMEOUT": "5000"
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/notification.py --desktop"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Titre de session personnalisé
+
+Utilisez `/rename` pour définir un titre personnalisé qui s'affichera dans les notifications :
+
+```bash
+# Dans Claude Code
+/rename "Amélioration notifications desktop"
+```
+
+**Sans titre** :
+- Notification : "✅ Claude Code - Tâche terminée"
+- Corps : "Session: abc123\nDurée: 45.2s"
+
+**Avec titre** :
+- Notification : "✅ Amélioration notifications desktop"
+- Corps : "Durée: 45.2s"
+
+### Dépendances
+
+**Linux** (Ubuntu/Debian) :
+```bash
+sudo apt install libnotify-bin
+```
+
+Vérification :
+```bash
+which notify-send
+```
+
+### Désactivation
+
+Pour désactiver les notifications desktop :
+
+```json
+{
+  "env": {
+    "CLAUDE_DESKTOP_NOTIFY": "false"
+  }
+}
+```
+
 ## Serveurs MCP
 
 **Documentation complète**: [docs/mcp-servers.md](docs/mcp-servers.md)
