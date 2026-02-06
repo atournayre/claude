@@ -4,7 +4,8 @@
     "ENGINEER_NAME": "Aurélien",
     "KYUTAI_LANGUAGE": "fr",
     "KYUTAI_VOICE": "onyx",
-    "CLAUDE_NOTIFICATION_DISPATCHER": "notify-send"
+    "CLAUDE_NOTIFICATION_DISPATCHER": "notify-send",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": 1
   },
   "includeCoAuthoredBy": true,
   "permissions": {
@@ -113,7 +114,9 @@
     "claude-code-setup@claude-plugins-official": true,
     "prompt@atournayre-claude-plugin-marketplace": true,
     "command@atournayre-claude-plugin-marketplace": true,
-    "notifications@atournayre-claude-plugin-marketplace": true
+    "notifications@atournayre-claude-plugin-marketplace": true,
+    "chrome-ui-test@atournayre-claude-plugin-marketplace": true,
+    "utils@atournayre-claude-plugin-marketplace": true
   },
   "language": "french"
 }
