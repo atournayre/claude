@@ -4,6 +4,9 @@ Documentation technique pour la configuration Claude Code.
 
 ## Contenu
 
+### Outils CLI
+- **[RTK - Rust Token Killer](RTK.md)** - Proxy CLI pour réduire la consommation de tokens (60-90%)
+
 ### Notifications
 - **[Kyutai TTS](kyutai-tts.md)** - Notifications vocales avec synthèse vocale Kyutai
 
@@ -34,6 +37,7 @@ Pour recharger la documentation externe:
 ```
 docs/
 ├── README.md                    # Ce fichier
+├── RTK.md                      # Doc RTK - Rust Token Killer (versionné)
 ├── kyutai-tts.md               # Doc Kyutai TTS (versionné)
 ├── api-platform/               # Doc API Platform (non versionné)
 ├── atournayre-framework/       # Doc framework (non versionné)
