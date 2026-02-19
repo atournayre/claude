@@ -1,36 +1,4 @@
 {
-  "enabledPlugins": {
-    "chrome-ui-test@atournayre-claude-plugin-marketplace": true,
-    "claude-code-setup@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "claude@atournayre-claude-plugin-marketplace": true,
-    "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "command@atournayre-claude-plugin-marketplace": true,
-    "context7@claude-plugins-official": true,
-    "customize@atournayre-claude-plugin-marketplace": true,
-    "dev@atournayre-claude-plugin-marketplace": true,
-    "doc@atournayre-claude-plugin-marketplace": true,
-    "feature-dev@claude-plugins-official": true,
-    "framework@atournayre-claude-plugin-marketplace": true,
-    "frontend-design@claude-code-plugins": false,
-    "gemini@atournayre-claude-plugin-marketplace": true,
-    "git@atournayre-claude-plugin-marketplace": true,
-    "github@atournayre-claude-plugin-marketplace": true,
-    "hookify@claude-code-plugins": false,
-    "marketing@atournayre-claude-plugin-marketplace": true,
-    "notifications@atournayre-claude-plugin-marketplace": true,
-    "output-styles@atournayre-claude-plugin-marketplace": true,
-    "php-lsp@claude-plugins-official": false,
-    "plugin-dev@claude-plugins-official": false,
-    "prompt@atournayre-claude-plugin-marketplace": true,
-    "qa@atournayre-claude-plugin-marketplace": true,
-    "ralph-loop@claude-plugins-official": true,
-    "review@atournayre-claude-plugin-marketplace": true,
-    "sentry@claude-plugins-official": true,
-    "symfony@atournayre-claude-plugin-marketplace": true,
-    "utils@atournayre-claude-plugin-marketplace": true
-  },
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_NOTIFICATION_DISPATCHER": "notify-send",
@@ -39,42 +7,7 @@
     "KYUTAI_LANGUAGE": "fr",
     "KYUTAI_VOICE": "onyx"
   },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/rtk-rewrite.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "~/.claude/scripts/chmod-written-files.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": "Write"
-      },
-      {
-        "hooks": [
-          {
-            "command": "~/.claude/scripts/chown-written-files.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": "Write"
-      }
-    ]
-  },
   "includeCoAuthoredBy": true,
-  "language": "french",
-  "model": "sonnet",
   "permissions": {
     "allow": [
       "Bash(./vendor/bin/phpstan:*)",
@@ -133,10 +66,77 @@
       "Bash(rm :*data:*)"
     ]
   },
-  "skipDangerousModePermissionPrompt": true,
+  "model": "sonnet",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/chmod-written-files.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/chown-written-files.sh"
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
+    "type": "command",
     "command": "npx -y ccstatusline@latest",
-    "padding": 0,
-    "type": "command"
-  }
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "chrome-ui-test@atournayre-claude-plugin-marketplace": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude@atournayre-claude-plugin-marketplace": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": false,
+    "command@atournayre-claude-plugin-marketplace": true,
+    "context7@claude-plugins-official": false,
+    "customize@atournayre-claude-plugin-marketplace": true,
+    "dev@atournayre-claude-plugin-marketplace": true,
+    "doc@atournayre-claude-plugin-marketplace": true,
+    "feature-dev@claude-plugins-official": false,
+    "framework@atournayre-claude-plugin-marketplace": true,
+    "frontend-design@claude-code-plugins": false,
+    "gemini@atournayre-claude-plugin-marketplace": true,
+    "git@atournayre-claude-plugin-marketplace": true,
+    "github@atournayre-claude-plugin-marketplace": true,
+    "hookify@claude-code-plugins": false,
+    "marketing@atournayre-claude-plugin-marketplace": true,
+    "notifications@atournayre-claude-plugin-marketplace": true,
+    "output-styles@atournayre-claude-plugin-marketplace": true,
+    "php-lsp@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": false,
+    "prompt@atournayre-claude-plugin-marketplace": true,
+    "qa@atournayre-claude-plugin-marketplace": true,
+    "ralph-loop@claude-plugins-official": true,
+    "review@atournayre-claude-plugin-marketplace": false,
+    "sentry@claude-plugins-official": false,
+    "symfony@atournayre-claude-plugin-marketplace": true,
+    "utils@atournayre-claude-plugin-marketplace": true
+  },
+  "language": "french",
+  "skipDangerousModePermissionPrompt": true
 }

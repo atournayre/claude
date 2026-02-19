@@ -30,19 +30,21 @@ logs/
 chrome/
 
 # Données temporaires et cache
+backups/
+cache/
+data/
+ide/
+image-cache/
+local/
+notifications/queue.jsonl
+paste-cache/
 plans/
 stats-cache.json
-todos/
 statsig/
-local/
 task/
-ide/
-data/
-cache/
-paste-cache/
 tasks
-notifications/queue.jsonl
 teams/
+todos/
 usage-data/
 
 # Rapports (peuvent être regénérés)
@@ -69,3 +71,4 @@ sessions.*
 old_commands
 .claude/tmp/
 /plugins/install-counts-cache.json
+/plugins/blocklist.json
