@@ -38,6 +38,32 @@
 
 # Workflow de développement
 
+## Avant d'écrire du code (tâches non-triviales)
+
+Répondre aux 3 questions avant tout :
+1. Qu'est-ce qui est demandé exactement ?
+2. Quelles sont les implications et effets de bord ?
+3. Quelle est la solution la plus simple ?
+
+Si impossible de répondre → STOP, demander clarification.
+→ Détails : `~/.claude/rules/core/think-first.md`
+
+## Definition of Done (projets PHP avec Makefile)
+
+Si le projet est PHP et dispose d'un Makefile :
+- Tâche = done SEULEMENT si `make run-all-tests-php` passe
+- Bug fix = test qui reproduit (rouge) → correction → test vert
+- Ne jamais dire "c'est fait" sans preuve
+- STOP après 2 tentatives échouées : changer d'approche
+- → Détails : `~/.claude/rules/core/definition-of-done.md`
+
+## Elegance (projets PHP uniquement)
+
+- Avant d'implémenter : "Yegor approuverait-il ?" (Elegant Objects)
+- Si la solution semble hacky : chercher l'approche EO correcte
+- Exception : fixes triviaux (typo, config, renommage)
+- → Détails : `~/.claude/rules/php/elegant-objects.md`
+
 ## Tests
 - Créer systématiquement des tests unitaires pour toute nouvelle fonction
 - Privilégier TDD quand possible
